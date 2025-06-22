@@ -6,6 +6,7 @@
 #include "Models/Object.h"
 
 #include "Cameras/Orthographic.h"
+#include "Cameras/Perspective.h"
 
 #include "Physics/Vector.h"
 
@@ -35,6 +36,9 @@ private:
     
     // Orthographic camera
     Orthographic* orthoCam;
+    Perspective* persCam;
+
+    CAM_TYPE camOn;
 
 public:
     //CONSTRUCTORS
@@ -46,6 +50,7 @@ public:
     void initialize();
     void run();
 
+    void checkInput();
     void setVAO(GLuint* VAO, int type);
    
     //DECONSTRUCTOR

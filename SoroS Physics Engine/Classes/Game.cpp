@@ -7,6 +7,8 @@ Game::Game(GLFWwindow* window, float windowWidth, float windowHeight) {
 	this->window = window;
 	this->windowWidth = windowWidth;
 	this->windowHeight = windowHeight;
+
+	camOn = ORTHOGRAPHIC;
 }
 
 //FUNCTIONS
@@ -81,14 +83,26 @@ void Game::initialize() {
 	orthoCam = new Orthographic(
         windowWidth,                 
 		windowHeight,                 
-        -50.0f,                 
-         50.0f,                 
+        -200.0f,                 
+         200.0f,                 
         vec3(0.0, 0.0, 5.0),  
-        vec3(0.0),             
+        vec3(0.0),
+		vec3(0.0),
         -800.0f,                 
          800.0f,                  
         -800.0f,                
          800.0f                  
+	);
+
+	persCam = new Perspective(
+		windowWidth,
+		windowHeight,
+		0.1f,                   
+		1000.0f,                 
+		vec3(0.0, 0.0, 900.0),
+		vec3(0.0),
+		vec3(0.0),
+		80.0
 	);
 
 	//Runs the game
@@ -109,7 +123,7 @@ void Game::run() {
 	
 	//////////////////////FOUR PARTICLES//////////////////////
 	Particle particle1 = Particle();
-	particle1.position = Vector(-110, 0, 0);
+	particle1.position = Vector(0, 0, 0);
 
 	Particle particle2 = Particle();
 	particle2.position = Vector(-75, -75, 0);
@@ -146,6 +160,8 @@ void Game::run() {
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		checkInput();
+
 		//GETS CURRENT TIME
 		currTime = clock::now();
 		auto duration = chrono::duration_cast<chrono::nanoseconds> (currTime - prevTime);
@@ -162,12 +178,24 @@ void Game::run() {
 			//RESET
 			curr_ns -= curr_ns;
 
+			//UPDATE Camera only in fixed update
+			// EITHER UPDATE ONLY 1 CAM OR BOTH AND JUST SWITCH
+			//if (camOn == ORTHOGRAPHIC) orthoCam->update();
+			//else persCam->update();
+			orthoCam->update();
+			persCam->update();
+
 			physWorld.update((float)ms.count() / 1000);
 		}
 		
 		//All objects use the same shader anyway
 		glUseProgram(allModels[0]->getShader().getShaderProg());
-		orthoCam->draw(allModels[0]->getShader().getShaderProg());
+
+		if(camOn == ORTHOGRAPHIC)
+			orthoCam->draw(allModels[0]->getShader().getShaderProg());
+		else
+			persCam->draw(allModels[0]->getShader().getShaderProg());
+
 		setVAO(&sphereVAO, BIND);
 
 		for (list<RenderParticle*>::iterator r = renderParticles.begin(); r != renderParticles.end(); r++) {
@@ -177,6 +205,31 @@ void Game::run() {
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
+}
+
+void Game::checkInput()
+{
+	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) camOn = ORTHOGRAPHIC;
+	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) camOn = PERSPECTIVE;
+
+	//if (camOn == PERSPECTIVE) {
+	//	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) persCam->rotateWithKeys('W');
+	//	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) persCam->rotateWithKeys('S');
+	//	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) persCam->rotateWithKeys('A');
+	//	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) persCam->rotateWithKeys('D');
+	//}
+	//else {
+	//	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) orthoCam->rotateWithKeys('W');
+	//	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) orthoCam->rotateWithKeys('S');
+	//	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) orthoCam->rotateWithKeys('A');
+	//	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) orthoCam->rotateWithKeys('D');
+	//}
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) { persCam->rotateWithKeys('W'); orthoCam->rotateWithKeys('W'); }
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) { persCam->rotateWithKeys('S'); orthoCam->rotateWithKeys('S'); }
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) { persCam->rotateWithKeys('A'); orthoCam->rotateWithKeys('A'); }
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) { persCam->rotateWithKeys('D'); orthoCam->rotateWithKeys('D'); }
+
+
 }
 
   //For proper VAO handling

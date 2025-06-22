@@ -21,9 +21,10 @@ public:
 	Orthographic();
 	Orthographic(float width, float height,
 				 float near, float far,
-				 vec3 position, vec3 center,
+				 vec3 position, vec3 center, vec3 rotation,
 			     float left, float right, float bottom, float top);
 
 	//FUNCTIONS
+	void update();
 	void draw(GLuint shaderProg);
 };

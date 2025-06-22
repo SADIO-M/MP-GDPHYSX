@@ -50,6 +50,7 @@
 #include "Classes/Models/Object.h"
 /* CAMERA-RELATED CLASSES */
 #include "Classes/Cameras/Camera.h"
+#include "Classes/Cameras/Perspective.h"
 #include "Classes/Cameras/Orthographic.h"
 
 ////////// CONFIGURATIONS //////////
