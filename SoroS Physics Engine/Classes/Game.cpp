@@ -21,12 +21,7 @@ void Game::start() {
 
   //Initializes the sphere and orthographic camera and time
 void Game::initialize() {
-	Vector atEdge(-110, 0, 0);
-	Vector myCenter(0, 0, 0);
-	Vector myVecPos1( 75,  75 ,0);
-	Vector myVecPos2(-75, -75, 0);
-	Vector myVecPos3( 75, -75, 0);
-	Vector myVecPos4(-75,  75, 0);
+	Vector defaultPos(0, 0 ,0);
 	Vector myVecScale(10, 10, 10);
 	Vector myVecRot(0, 0, 0);
 	Vector color1(0.8f, 0.7f, 0.0f);
@@ -40,7 +35,7 @@ void Game::initialize() {
 		//1
 	allModels.push_back(new Object(
 		"3D/sphere.obj",
-		(vec3)atEdge,
+		(vec3)defaultPos,
 		(vec3)myVecScale,
 		(vec3)myVecRot,
 		"Shaders/ObjectShader.vert",
@@ -52,7 +47,7 @@ void Game::initialize() {
 		//2
 	allModels.push_back(new Object(
 		"3D/sphere.obj",
-		(vec3)myVecPos2,
+		(vec3)defaultPos,
 		(vec3)myVecScale,
 		(vec3)myVecRot,
 		"Shaders/ObjectShader.vert",
@@ -63,7 +58,7 @@ void Game::initialize() {
 		//3
 	allModels.push_back(new Object(
 		"3D/sphere.obj",
-		(vec3)myVecPos3,
+		(vec3)defaultPos,
 		(vec3)myVecScale,
 		(vec3)myVecRot,
 		"Shaders/ObjectShader.vert",
@@ -74,7 +69,7 @@ void Game::initialize() {
 		//4
 	allModels.push_back(new Object(
 		"3D/sphere.obj",
-		(vec3)myVecPos4,
+		(vec3)defaultPos,
 		(vec3)myVecScale,
 		(vec3)myVecRot,
 		"Shaders/ObjectShader.vert",
@@ -90,10 +85,10 @@ void Game::initialize() {
          50.0f,                 
         vec3(0.0, 0.0, 5.0),  
         vec3(0.0),             
-        -100.0f,                 
-         100.0f,                  
-        -100.0f,                
-         100.0f                  
+        -800.0f,                 
+         800.0f,                  
+        -800.0f,                
+         800.0f                  
 	);
 
 	//Runs the game
@@ -109,34 +104,21 @@ void Game::run() {
 	chrono::nanoseconds curr_ns(0);
 
 	//////DRAG FORCE//////
-	DragForceGenerator drag = DragForceGenerator(0.14f, 0.1f);
+	//DragForceGenerator drag = DragForceGenerator(0.14f, 0.1f);
 	//DragForceGenerator drag = DragForceGenerator();
 	
 	//////////////////////FOUR PARTICLES//////////////////////
 	Particle particle1 = Particle();
 	particle1.position = Vector(-110, 0, 0);
-	particle1.addForce(Vector(2000, 0, 0));
-	//particle1.position = Vector(75, 75, 0);
-	//particle1.velocity = Vector(-25, -25, 0);
-	//particle1.acceleration = Vector(0, 0, 0);
 
 	Particle particle2 = Particle();
 	particle2.position = Vector(-75, -75, 0);
-	particle2.addForce(Vector(2000, 2000, 0));
-	//particle2.velocity = Vector(25, 25, 0);
-	//particle2.acceleration = Vector(0, 0, 0);
 	
 	Particle particle3 = Particle();
 	particle3.position = Vector(75, -75, 0);
-	particle3.addForce(Vector(-2000, 2000, 0));
-	//particle3.velocity = Vector(-25, 25, 0);
-	//particle3.acceleration = Vector(0, 0, 0);
 	
 	Particle particle4 = Particle();
 	particle4.position = Vector(-75, 75, 0);
-	particle4.addForce(Vector(2000, -2000, 0));
-	//particle4.velocity = Vector(25, -25, 0);
-	//particle4.acceleration = Vector(0, 0, 0);
 	
 	PhysicsWorld physWorld = PhysicsWorld();
 	physWorld.addParticle(&particle1);
@@ -144,7 +126,7 @@ void Game::run() {
 	physWorld.addParticle(&particle3);
 	physWorld.addParticle(&particle4);
 	//only particle 1 has drag applied
-	physWorld.forceRegistry.add(&particle1, &drag);
+	//physWorld.forceRegistry.add(&particle1, &drag);
 
 	//////////////////////RENDER PARTICLE LIST//////////////////////
 	list<RenderParticle*> renderParticles;

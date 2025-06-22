@@ -64,7 +64,7 @@ int main(void)
           windowHeight = 800.0f;
 
     if (!glfwInit()) return -1;
-        window = glfwCreateWindow(windowWidth, windowHeight, "Megan Florence Sophia C. Sadio", NULL, NULL);
+        window = glfwCreateWindow(windowWidth, windowHeight, "SoroS Physics Engine", NULL, NULL);
 
     if (!window)
     {
