@@ -149,6 +149,7 @@
     <ClCompile Include="Classes\Physics\Particle.cpp" />
     <ClCompile Include="Classes\Physics\PhysicsWorld.cpp" />
     <ClCompile Include="Classes\Physics\RenderParticle.cpp" />
+    <ClCompile Include="Classes\Physics\RenderParticleFactory.cpp" />
     <ClCompile Include="Classes\Physics\Vector.cpp" />
     <ClCompile Include="Classes\Shaders\Shader.cpp" />
     <ClCompile Include="Classes\Game.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="Classes\Physics\Particle.h" />
     <ClInclude Include="Classes\Physics\PhysicsWorld.h" />
     <ClInclude Include="Classes\Physics\RenderParticle.h" />
+    <ClInclude Include="Classes\Physics\RenderParticleFactory.h" />
     <ClInclude Include="Classes\Physics\Vector.h" />
     <ClInclude Include="Classes\Shaders\Shader.h" />
     <ClInclude Include="Classes\Game.h" />

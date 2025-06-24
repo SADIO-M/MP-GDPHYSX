@@ -5,7 +5,7 @@ using namespace Physics;
 void PhysicsWorld::addParticle(Particle* toAdd) {
 	Particles.push_back(toAdd);
 
-	//forceRegistry.add(toAdd, &gravity);
+	forceRegistry.add(toAdd, &gravity);
 }
 
 list<Particle*>* PhysicsWorld::getParticleList() {

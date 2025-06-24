@@ -17,6 +17,7 @@
 #include "Physics/ForceRegistry.h"
 #include "Physics/GravityForceGenerator.h"
 #include "Physics/DragForceGenerator.h"
+#include "Physics/RenderParticleFactory.h"
 
 /* 
     Game Class
@@ -39,7 +40,6 @@ private:
     Perspective* persCam;
 
     CAM_TYPE camOn;
-
 public:
     //CONSTRUCTORS
     Game();

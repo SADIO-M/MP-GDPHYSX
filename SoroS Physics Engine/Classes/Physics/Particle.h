@@ -11,6 +11,9 @@ namespace Physics{
 			Vector velocity;		//Current Velocity
 			Vector acceleration;	//Current Acceleration
 
+			float lifespan;
+			float life = 0.0f;
+
 		protected:
 			//Default drag value
 			float damping = 0.9f;

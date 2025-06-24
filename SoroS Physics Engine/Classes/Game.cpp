@@ -27,9 +27,6 @@ void Game::initialize() {
 	Vector myVecScale(10, 10, 10);
 	Vector myVecRot(0, 0, 0);
 	Vector color1(0.8f, 0.7f, 0.0f);
-	Vector color2(0.0f, 0.5f, 0.8f);
-	Vector color3(0.5f, 0.1f, 0.4f);
-	Vector color4(1.0f, 0.0f, 0.0f);
 	
 	//Load Sphere
 	setVAO(&sphereVAO, GENERATE);
@@ -45,39 +42,6 @@ void Game::initialize() {
 		(vec3)color1
 	));
 	setVAO(&sphereVAO, UNBIND);
-
-		//2
-	allModels.push_back(new Object(
-		"3D/sphere.obj",
-		(vec3)defaultPos,
-		(vec3)myVecScale,
-		(vec3)myVecRot,
-		"Shaders/ObjectShader.vert",
-		"Shaders/ObjectShader.frag",
-		(vec3)color2
-	));
-
-		//3
-	allModels.push_back(new Object(
-		"3D/sphere.obj",
-		(vec3)defaultPos,
-		(vec3)myVecScale,
-		(vec3)myVecRot,
-		"Shaders/ObjectShader.vert",
-		"Shaders/ObjectShader.frag",
-		(vec3)color3
-	));
-
-		//4
-	allModels.push_back(new Object(
-		"3D/sphere.obj",
-		(vec3)defaultPos,
-		(vec3)myVecScale,
-		(vec3)myVecRot,
-		"Shaders/ObjectShader.vert",
-		"Shaders/ObjectShader.frag",
-		(vec3)color4
-	));
 
 	//Create Orthographic Camera
 	orthoCam = new Orthographic(
@@ -116,44 +80,25 @@ void Game::run() {
 	auto currTime = clock::now();
 	auto prevTime = currTime;
 	chrono::nanoseconds curr_ns(0);
-
-	//////DRAG FORCE//////
-	//DragForceGenerator drag = DragForceGenerator(0.14f, 0.1f);
-	//DragForceGenerator drag = DragForceGenerator();
-	
-	//////////////////////FOUR PARTICLES//////////////////////
-	Particle particle1 = Particle();
-	particle1.position = Vector(0, 0, 0);
-
-	Particle particle2 = Particle();
-	particle2.position = Vector(-75, -75, 0);
-	
-	Particle particle3 = Particle();
-	particle3.position = Vector(75, -75, 0);
-	
-	Particle particle4 = Particle();
-	particle4.position = Vector(-75, 75, 0);
 	
 	PhysicsWorld physWorld = PhysicsWorld();
-	physWorld.addParticle(&particle1);
-	physWorld.addParticle(&particle2);
-	physWorld.addParticle(&particle3);
-	physWorld.addParticle(&particle4);
-	//only particle 1 has drag applied
-	//physWorld.forceRegistry.add(&particle1, &drag);
 
 	//////////////////////RENDER PARTICLE LIST//////////////////////
 	list<RenderParticle*> renderParticles;
-	for (int i = 0; i < allModels.size(); i++) {
-		Vector newCol;
-		vec3 col = (dynamic_cast<Object*>(allModels[i])->getColor());
-			newCol.x = col.x;
-			newCol.y = col.y;
-			newCol.z = col.z;
-	
-		RenderParticle* renPar = new RenderParticle(physWorld.getParticleAtIndex(i), allModels[i], newCol);
-		renderParticles.push_back(renPar);
+
+	int sparkNum = 0;
+	cout << "Enter spark number: ";
+	cin >> sparkNum;
+	cout << endl;
+
+	// TESTING FACTORY //
+	RenderParticleFactory renParFactory(&allModels, &physWorld);
+
+	for (int i = 0; i < sparkNum; i++) {
+		renderParticles.push_back(renParFactory.create());
 	}
+
+	// END OF TESTING FACTORY //
 
 	//////////////////////MAIN LOOP//////////////////////
 	while (!glfwWindowShouldClose(window))
