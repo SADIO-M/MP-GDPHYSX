@@ -7,6 +7,8 @@
 	Orthographic camera class
 		- Child of camera
 		- Holds all relevant information for an orthographic projection
+
+	[Created by: Megan Sadio]
 */
 
 class Orthographic : public Camera {

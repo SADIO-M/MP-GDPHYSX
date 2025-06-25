@@ -7,6 +7,8 @@
     The parent class of all the objects
         - Contains all information and functions required by all objects
         - Loads the objects, sets up the VBOs and deals with general object loading
+
+    [Created by: Megan Sadio]
 */
 class Model3D {
 protected:

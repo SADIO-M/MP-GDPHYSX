@@ -23,6 +23,8 @@ namespace Physics {
 		Vector operator- (const Vector RHS);	//Subtraction
 		Vector operator* (const float scalar);	//Scalar Multiplication
 		void operator+= (const Vector RHS);
+		void operator-= (const Vector RHS);
+		void operator*= (const float scalar);
 		/* Vector Products */
 		Vector component(const Vector RHS); //Component Product
 		float dot(const Vector RHS);		//Dot Product

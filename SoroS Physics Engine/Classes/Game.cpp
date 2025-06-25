@@ -12,9 +12,6 @@ Game::Game(GLFWwindow* window, float windowWidth, float windowHeight) {
 //FUNCTIONS
   //Starts initialization
 void Game::start() {
-
-	// Removes the cursor to allow for better mouse input 
-	glfwSetCursorPos(window, 0, 0);
 	glfwMakeContextCurrent(window);
 	gladLoadGL();
 	glViewport(0, 0, windowWidth, windowHeight);
@@ -23,10 +20,14 @@ void Game::start() {
 	initialize();
 }
 
-  //Initializes the sphere and orthographic camera and time
+  //Initializes the sphere VAO and the cameras
 void Game::initialize() {
 	// Load the sphere VAO
+	// Setting everything to zero because all we need is to load the shaders
 	Vector zero(0, 0 ,0);
+	Vector orthoPos(0.0, 0.0, 5.0);
+	Vector persPos(0.0, 0.0, 700.0);
+
 	setVAO(&sphereVAO, GENERATE);
 	setVAO(&sphereVAO, BIND);
 	sphereObj = new Object(
@@ -42,28 +43,29 @@ void Game::initialize() {
 
 	//Create Orthographic Camera
 	orthoCam = new Orthographic(
-		windowWidth,
-		windowHeight,
-		-1200.0f,
-		 1200.0f,
-		vec3(0.0, 0.0, 5.0),
-		vec3(0.0),
-		vec3(0.0),
-		-800.0f,
-		800.0f,
-		-800.0f,
-		800.0f
+		windowWidth,            // Window width
+		windowHeight,           // Window height
+		-1200.0f,               // zNear
+		 1200.0f,				// zFar
+		(vec3)orthoPos,	        // Camera Position
+		(vec3)zero,				// Camera Center
+		(vec3)zero,				// Camera Rotation
+		-800.0f,				// Left Point
+		 800.0f,				// Right Point
+		-800.0f,				// Bottom Point
+		 800.0f					// Top Point
 	);
 
+	//Create Perspective Camera
 	persCam = new Perspective(
-		windowWidth,
-		windowHeight,
-		0.1f,
-		1200.0f,
-		vec3(0.0, 0.0, 700.0),
-		vec3(0.0),
-		vec3(0.0),
-		100.0
+		windowWidth,            // Window width
+		windowHeight,			// Window height
+		0.1f,					// zNear
+		1200.0f,				// zFar
+		(vec3)persPos,	        // Camera Position
+		(vec3)zero,				// Camera Center
+		(vec3)zero,				// Camera Rotation
+		100.0					// Field of View (FOV)
 	);
 
 	//Runs the game
@@ -71,13 +73,14 @@ void Game::initialize() {
 	glfwTerminate();
 }
 
-  //Runs the game, renders camera and sphere
+  //Runs the game, renders cameras and particles
 void Game::run() {
 	using clock = chrono::high_resolution_clock;
 	auto currTime = clock::now();
 	auto prevTime = currTime;
 	chrono::nanoseconds curr_ns(0);
 	
+	// Initialize a physics world
 	PhysicsWorld physWorld = PhysicsWorld();
 	
 	// Accepts player input for the number of sparks allowed on screen
@@ -108,6 +111,7 @@ void Game::run() {
 		inputCooldown++;
 
 		curr_ns += duration;
+		///// FIXED UPDATE /////
 		if (curr_ns >= timestep) {
 			auto ms = chrono::duration_cast<chrono::milliseconds>(curr_ns);
 			//RESET
@@ -116,6 +120,7 @@ void Game::run() {
 			orthoCam->update();
 			persCam->update();
 
+			// Will only update if the game is playing
 			if (play) {
 				physWorld.update((float)ms.count() / 1000);
 

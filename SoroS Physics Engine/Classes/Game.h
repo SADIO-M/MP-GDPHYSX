@@ -1,15 +1,15 @@
 #pragma once
 
+//// CONFIGURATIONS
 #include "../Config/namespace.h"
 #include "../Config/enumerations.h"
-
+/// MODELS
 #include "Models/Object.h"
-
+/// CAMERAS
 #include "Cameras/Orthographic.h"
 #include "Cameras/Perspective.h"
-
+/// PHYSICS-RELATED
 #include "Physics/Vector.h"
-
 #include "Physics/Particle.h"
 #include "Physics/PhysicsWorld.h"
 #include "Physics/RenderParticle.h"
@@ -21,8 +21,12 @@
 
 /* 
     Game Class
-        - Contains the sphere and the orthographic camera
+        - Contains the sphere and cameras
         - Where the main game loop is located
+        - Fixed Update handles all physics-related things (like physics world and render particles)
+        - Handles player inputs
+
+    [Created by: Megan Sadio and Yza Montuerto]
 */
 class Game {
 private:
@@ -39,8 +43,11 @@ private:
     Orthographic* orthoCam;
     Perspective* persCam;
 
+    //Checks current camera 
     CAM_TYPE camOn = ORTHOGRAPHIC;
+    //For play or pausing
     bool play = true;
+    //Input cooldown
     float inputCooldown = 0;
 
 public:

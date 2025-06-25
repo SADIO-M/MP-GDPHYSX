@@ -4,12 +4,9 @@
 #include "../../Config/namespace.h"
 
 /*
-	This is the Perspective class for the perspective camera
-		- Contains all the variables needed for a perspective camera
-		- Its main difference from the Orthographic camera is that it moves (rotates)
-		- In the draw function, it makes its projection matrix = perspective(...)
-		- Holds the field of view and rotation speed (since this camera rotates)
+	Perspective camera
 		- child of Camera
+		- Contains all the variables needed for a perspective camera
 
 	[Created by: Megan Sadio]
 */
@@ -27,6 +24,7 @@ public:
 		vec3 rotation,
 		float fov);
 
+	//FUNCTIONS
 	void update();
 	void draw(GLuint shaderProg);
 };

@@ -15,13 +15,14 @@ Orthographic::Orthographic(float width, float height,
 	topPoint = top;
 }
 
+//FUNCTIONS
+   // Update function, called in fixed update to avoid input or rotation lag
 void Orthographic::update()
 {
 	rotateCamera();
 	Camera::checkCameraRotation();
 }
 
-//FUNCTIONS
    //Draws the camera by assigning the view, projection, and sending that to the objects shader program
 void Orthographic::draw(GLuint shaderProg) {
 	viewMatrix = lookAt(cameraPosition, cameraCenter, worldUp);
@@ -32,6 +33,6 @@ void Orthographic::draw(GLuint shaderProg) {
 		topPoint,
 		zNear,
 		zFar);
-
+	// Draw used from Camera class
 	Camera::draw(shaderProg);
 }
