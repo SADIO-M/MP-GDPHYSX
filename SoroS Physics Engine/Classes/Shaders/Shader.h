@@ -8,6 +8,8 @@
 	Shader class for all Shader-related operations
 		- Loading file, creating, attaching, and linker shaders to shader program
         - Contains the shader program of the object
+
+	[Created by: Yza Montuerto]
 */
 class Shader {
 private:

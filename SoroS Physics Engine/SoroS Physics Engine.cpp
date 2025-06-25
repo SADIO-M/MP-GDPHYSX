@@ -1,6 +1,7 @@
 /*
-////////// ASSIGNMENT 1 : GDPHYSX - S22 //////////
+////////// PHASE 1 : GDPHYSX - S22 //////////
     Submitted by:
+        MONTUERTO, Yzabelle Anne A.
         SADIO, Megan Florence Sophia C.
 */
 #include <iostream>
@@ -75,6 +76,7 @@ int main(void)
     }
 
     //Set window position so window spawns at the same place every time
+    //Placed on the right so user can see the prompt to type number of sparks
     glfwSetWindowPos(window, 1080, 540 - (windowHeight / 2));
 
     //Create, start, then deconstruct game when finished

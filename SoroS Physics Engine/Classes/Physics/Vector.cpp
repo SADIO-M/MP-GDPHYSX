@@ -65,6 +65,18 @@ void Physics::Vector::operator+=(const Vector RHS)
 	this->y += RHS.y;
 	this->z += RHS.z;
 }
+void Physics::Vector::operator-=(const Vector RHS)
+{
+	this->x -= RHS.x;
+	this->y -= RHS.y;
+	this->z -= RHS.z;
+}
+void Physics::Vector::operator*=(const float scalar)
+{
+	this->x *= scalar;
+	this->y *= scalar;
+	this->z *= scalar;
+}
 	/* Vector Products */
 	///// Component Product
 Vector Vector::component (const Vector RHS) {

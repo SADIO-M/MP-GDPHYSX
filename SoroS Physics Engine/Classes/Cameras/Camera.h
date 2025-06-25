@@ -3,8 +3,12 @@
 #include "../../Config/namespace.h"
 
 /*
-	Camera class that contains general camera information
-		- Parent of Orthographic
+	This is the Camera class, the parent of Orthographic and Perspective
+		- Contains all the variables and functions needed by both cameras
+		- Update and draw are meant to be defined by its child classes
+		- Handles camera rotation for both child classes
+
+	[Created by: Megan Sadio]
 */
 class Camera {
 protected:
@@ -24,12 +28,13 @@ protected:
 	vec3 cameraPosition;
 	vec3 cameraCenter;
 
+	// Speed of camera rotation
 	float rotateSpeed = 0.025f;
 	vec3 cameraRotation = vec3(0.0f);
 	mat4 rotationMatrix = mat4(1.0f);
 	vec3 toLookAt = vec3(0.0f);
 public:
-	//CONSTRUCTOR
+	//CONSTRUCTORS
 	Camera();
 	Camera(float width, float height,
 		   float near,  float far,
@@ -40,6 +45,7 @@ public:
 	virtual void checkCameraRotation();
 	virtual void rotateWithKeys(char keyPressed);
 
+		// Define in child classes
 	virtual void update() = 0;
 	virtual void draw(GLuint shaderProg) = 0;
 };

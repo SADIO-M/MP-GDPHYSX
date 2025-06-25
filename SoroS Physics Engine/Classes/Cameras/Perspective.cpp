@@ -2,7 +2,6 @@
 
 //CONSTRUCTORS
 Perspective::Perspective(){}
-
 Perspective::Perspective(float width, float height,
 						float near, float far,
 						vec3 position, vec3 center,
@@ -15,7 +14,7 @@ Perspective::Perspective(float width, float height,
 }
 
 //FUNCTIONS
-
+   // Update function, called in fixed update to avoid input or rotation lag
 void Perspective::update()
 {
 	rotateCamera();

@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-//CONSTRUCTOR
+//CONSTRUCTORS
 Camera::Camera(){}
 Camera::Camera(float width, float height,
 	float near, float far,
@@ -19,6 +19,7 @@ Camera::Camera(float width, float height,
 	cameraRotation = rotation;
 }
 
+//FUNCTIONS
 void Camera::rotateCamera()
 {
 	// Rotate the camera accordingly 
@@ -32,11 +33,14 @@ void Camera::rotateCamera()
 	cameraPosition = vec3(vec4(rotationMatrix * vec4(initialPosition, 1.0f)));
 }
 
+// Avoids strange camera flipping when over 90 or -90 degrees
+// Locks it at 81 or -81 degrees
 void Camera::checkCameraRotation() {
 	if (cameraRotation.x > 81.0f) cameraRotation.x = 81.0f;
 	if (cameraRotation.x < -81.0f) cameraRotation.x = -81.0f;
 }
 
+// Player input for rotating camera with keys
 void Camera::rotateWithKeys(char keyPressed)
 {
 	switch (keyPressed) {
@@ -51,6 +55,7 @@ void Camera::rotateWithKeys(char keyPressed)
 	}
 }
 
+// Draws the camera, used by both orthographic and perspective
 void Camera::draw(GLuint shaderProg) {
 	GLuint viewCamAddress = glGetUniformLocation(shaderProg, "camera_view");
 	glUniformMatrix4fv(viewCamAddress, 1, GL_FALSE, value_ptr(viewMatrix));

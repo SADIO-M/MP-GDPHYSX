@@ -7,6 +7,8 @@
 	This is the Object class
 		- This class is for more "general" objects
 		- Define color when instantiating
+
+	[Created by: Megan Sadio]
 */
 class Object : public Model3D {
 private:
