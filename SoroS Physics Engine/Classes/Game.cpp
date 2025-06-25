@@ -12,6 +12,9 @@ Game::Game(GLFWwindow* window, float windowWidth, float windowHeight) {
 //FUNCTIONS
   //Starts initialization
 void Game::start() {
+
+	// Removes the cursor to allow for better mouse input 
+	glfwSetCursorPos(window, 0, 0);
 	glfwMakeContextCurrent(window);
 	gladLoadGL();
 	glViewport(0, 0, windowWidth, windowHeight);
@@ -41,8 +44,8 @@ void Game::initialize() {
 	orthoCam = new Orthographic(
 		windowWidth,
 		windowHeight,
-		-500.0f,
-		500.0f,
+		-1200.0f,
+		 1200.0f,
 		vec3(0.0, 0.0, 5.0),
 		vec3(0.0),
 		vec3(0.0),
@@ -56,8 +59,8 @@ void Game::initialize() {
 		windowWidth,
 		windowHeight,
 		0.1f,
-		1000.0f,
-		vec3(0.0, 0.0, 500.0),
+		1200.0f,
+		vec3(0.0, 0.0, 700.0),
 		vec3(0.0),
 		vec3(0.0),
 		100.0

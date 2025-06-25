@@ -52,8 +52,8 @@ public:
     void start();
     void initialize();
     void run();
-    void cleanRenderParticles(list<RenderParticle*>* renderParticles);
 
+    void cleanRenderParticles(list<RenderParticle*>* renderParticles);
     void checkInput();
     void setVAO(GLuint* VAO, int type);
    

@@ -34,7 +34,7 @@ void Camera::rotateCamera()
 
 void Camera::checkCameraRotation() {
 	if (cameraRotation.x > 81.0f) cameraRotation.x = 81.0f;
-	if (cameraRotation.x < -88.0f) cameraRotation.x = -88.0f;
+	if (cameraRotation.x < -81.0f) cameraRotation.x = -81.0f;
 }
 
 void Camera::rotateWithKeys(char keyPressed)

@@ -24,7 +24,7 @@ protected:
 	vec3 cameraPosition;
 	vec3 cameraCenter;
 
-	float rotateSpeed = 0.01f;
+	float rotateSpeed = 0.025f;
 	vec3 cameraRotation = vec3(0.0f);
 	mat4 rotationMatrix = mat4(1.0f);
 	vec3 toLookAt = vec3(0.0f);

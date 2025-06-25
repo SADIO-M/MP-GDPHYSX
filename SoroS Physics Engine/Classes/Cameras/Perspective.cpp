@@ -15,19 +15,6 @@ Perspective::Perspective(float width, float height,
 }
 
 //FUNCTIONS
-/*
-	This rotateWithMouse handles the rotation using the mouse and calculates the rotation
-		- Updates the camRotationMod, the modifier responsible for the camera's rotation
-		- Gets the rotation from the previous mouse position and updates the current x and y accordingly
-		- Rotate speed is for camera rotation sensitivity
-*/
-void Perspective::rotateWithMouse(dvec2* prevMousePos, dvec2* currMousePos) {
-	cameraRotation.x -= (currMousePos->y - prevMousePos->y) * rotateSpeed;
-	cameraRotation.y -= (prevMousePos->x - currMousePos->x) * rotateSpeed;
-
-	prevMousePos->x = currMousePos->x;
-	prevMousePos->y = currMousePos->y;
-}
 
 void Perspective::update()
 {

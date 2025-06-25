@@ -17,7 +17,6 @@
 class Perspective : public Camera {
 private:
 	float fieldOfView;
-	float rotateSpeed = 0.02f;
 
 public:
 	//CONSTRUCTORS
@@ -27,10 +26,6 @@ public:
 		vec3 position, vec3 center,
 		vec3 rotation,
 		float fov);
-
-	//FUNCTIONS
-	void rotateWithMouse(dvec2* prevMousePos, dvec2* currMousePos);
-	//void rotateWithKeys(char keyPressed);
 
 	void update();
 	void draw(GLuint shaderProg);
