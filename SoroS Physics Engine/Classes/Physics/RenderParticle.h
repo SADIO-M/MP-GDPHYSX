@@ -6,6 +6,10 @@
 #include "../Models/Object.h"
 #include "../../Config/namespace.h"
 
+/*
+*	Render particle from class code.
+*		- Modified to keep track of particle life status.
+*/
 namespace Physics {
 	class RenderParticle {
 	public:

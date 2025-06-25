@@ -1,19 +1,25 @@
 #include "RenderParticleFactory.h"
 
+// CONSTRUCTOR
 Physics::RenderParticleFactory::RenderParticleFactory(PhysicsWorld* physWorld)
 {
-	generator.seed(random_device{}());
+	generator.seed(random_device{}()); // feeds a seed into the randomizer
 	physicsWorld = physWorld;
 }
 
+/*
+*	Creates the sphere model, physics particle, and the render particle to hold both.
+*		- Also adds the physics particle to the particle list in Game
+*		- Handles the randomized properties of the particle
+*/
 RenderParticle* Physics::RenderParticleFactory::create()
 {
-	// make and push sphere into game's allModels vector
+	// MAKING THE SPHERE OBJECT // 
 	Vector vecPos(0, -600, 0);
-	float scale = randomizeFloat(minRadius, maxRadius);
-	Vector vecScale(scale, scale, scale);
+	float scale = randomizeFloat(minRadius, maxRadius); // Random scale
+		Vector vecScale(scale, scale, scale);
 	Vector vecRot(0, 0, 0);
-	Vector vecColor(randomizeFloat(0.0f, 1.0f), randomizeFloat(0.0f, 1.0f), randomizeFloat(0.0f, 1.0f));
+	Vector vecColor(randomizeFloat(0.0f, 1.0f), randomizeFloat(0.0f, 1.0f), randomizeFloat(0.0f, 1.0f)); // Random color
 	
 	Model3D* sphere = new Object(
 		"3D/sphere.obj",
@@ -27,18 +33,24 @@ RenderParticle* Physics::RenderParticleFactory::create()
 
 	// MAKING THE PARTICLE //
 	Particle* particle = new Particle();
+
 	particle->position = vecPos;
+		// Randomizing the particle's initial velocity to imitate fountain firework effect
 	Vector vel(randomizeFloat(-100.0f, 100.0f), randomizeFloat(100.f, 250.0f), randomizeFloat(-100.0f, 100.0f));
 	particle->velocity = vel;
-	particle->lifespan = randomizeFloat(minLifespan, maxLifespan);
+		// Random lifespan
+	particle->lifespan = randomizeFloat(minLifespan, maxLifespan); 
+
+		// Adding the particle to the physics world
 	physicsWorld->addParticle(particle);
 
+	// MAKING THE RENDER PARTICLE //
 	RenderParticle* renPar = new RenderParticle(particle, sphere, vecColor);
 
 	return renPar;
 }
 
-// HELPER FUNCIONS
+// HELPER FUNCION
 
 float Physics::RenderParticleFactory::randomizeFloat(float min, float max)
 {
