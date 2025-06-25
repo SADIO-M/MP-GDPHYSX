@@ -80,12 +80,18 @@ void Game::run() {
 	
 	PhysicsWorld physWorld = PhysicsWorld();
 	
+	// Accepts player input for the number of sparks allowed on screen
 	int sparkNum = 0;
 		cout << "Enter spark number: ";
 		cin >> sparkNum;
 		cout << endl;
-
+	
+	/*
+	* Render particle factory which takes a pointer to VAR : [physWorld] to update particles
+	*	- Responsible for spawning in new sparks
+	*/ 
 	RenderParticleFactory renParFactory(&physWorld);
+		// List of all render particles
 	list<RenderParticle*> renderParticles;
 
 	//////////////////////MAIN LOOP//////////////////////
@@ -113,6 +119,7 @@ void Game::run() {
 			if (play) {
 				physWorld.update((float)ms.count() / 1000);
 
+				// Will continuously spawn sparks as long as the max amount of sparks is not reached
 				if (renderParticles.size() < sparkNum) {
 					renderParticles.push_back(renParFactory.create());
 				}
@@ -129,6 +136,8 @@ void Game::run() {
 		for (list<RenderParticle*>::iterator r = renderParticles.begin(); r != renderParticles.end(); r++) {
 			(*r)->draw();
 		}
+
+		// Removes destroyed render particles
 		cleanRenderParticles(&renderParticles);
 
 		glfwSwapBuffers(window);
@@ -136,6 +145,7 @@ void Game::run() {
 	}
 }
 
+	// Checks if a render particle has been destroyed, and removes it from the list if it is
 void Game::cleanRenderParticles(list<RenderParticle*>* renderParticles)
 {
 	renderParticles->remove_if(

@@ -22,6 +22,8 @@ void RenderParticle::draw() {
 		obj->updatePos(physicsParticle->position);
 		obj->draw();
 	}
+
+	// Sets the status of the render particle to destroyed if the particle has been destroyed
 	else {
 		isDestroyed = true;
 	}
