@@ -25,10 +25,9 @@ RenderParticle* Physics::RenderParticleFactory::create()
 		(vec3)vecColor
 	);
 
-	// MAKING THE PARTILE //
+	// MAKING THE PARTICLE //
 	Particle* particle = new Particle();
 	particle->position = vecPos;
-	// [ TEMP ] assigning random initial velocity to particles so they shoot up
 	Vector vel(randomizeFloat(-100.0f, 100.0f), randomizeFloat(100.f, 250.0f), randomizeFloat(-50.0f, 50.0f));
 	particle->velocity = vel;
 	particle->lifespan = randomizeFloat(minLifespan, maxLifespan);

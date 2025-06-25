@@ -9,6 +9,7 @@
 namespace Physics {
 	class RenderParticle {
 	public:
+		bool isDestroyed = false;
 		Particle* physicsParticle;
 		Model3D* objectToRender;
 		Vector color;

@@ -22,4 +22,7 @@ void RenderParticle::draw() {
 		obj->updatePos(physicsParticle->position);
 		obj->draw();
 	}
+	else {
+		isDestroyed = true;
+	}
 }

@@ -76,18 +76,14 @@ void Game::run() {
 	chrono::nanoseconds curr_ns(0);
 	
 	PhysicsWorld physWorld = PhysicsWorld();
-	list<RenderParticle*> renderParticles;
-
+	
 	int sparkNum = 0;
 		cout << "Enter spark number: ";
 		cin >> sparkNum;
 		cout << endl;
-		cout << "Loading sparks..." << endl << endl;
+		//cout << "Loading sparks..." << endl << endl;
 
 	RenderParticleFactory renParFactory(&physWorld);
-	for (int i = 0; i < sparkNum; i++) {
-		renderParticles.push_back(renParFactory.create());
-	}
 
 	cout << "Press [SPACE] to launch sparks!" << endl; 
 
@@ -114,6 +110,10 @@ void Game::run() {
 			persCam->update();
 
 			if(play) physWorld.update((float)ms.count() / 1000);
+
+			if (renderParticles.size() < sparkNum) {
+				renderParticles.push_back(renParFactory.create());
+			}
 		}
 		
 		//All objects use the same shader anyway
@@ -126,10 +126,20 @@ void Game::run() {
 		for (list<RenderParticle*>::iterator r = renderParticles.begin(); r != renderParticles.end(); r++) {
 			(*r)->draw();
 		}
+		cleanRenderParticles();
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
+}
+
+void Game::cleanRenderParticles()
+{
+	renderParticles.remove_if(
+		[](RenderParticle* p) {
+			return p->isDestroyed;
+		}
+	);
 }
 
 void Game::checkInput()

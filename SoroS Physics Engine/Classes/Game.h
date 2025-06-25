@@ -42,6 +42,8 @@ private:
     CAM_TYPE camOn = ORTHOGRAPHIC;
     bool play = false;
     float inputCooldown = 0;
+
+    list<RenderParticle*> renderParticles;
 public:
     //CONSTRUCTORS
     Game();
@@ -51,6 +53,7 @@ public:
     void start();
     void initialize();
     void run();
+    void cleanRenderParticles();
 
     void checkInput();
     void setVAO(GLuint* VAO, int type);

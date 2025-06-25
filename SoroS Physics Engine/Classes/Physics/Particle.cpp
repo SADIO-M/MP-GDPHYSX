@@ -18,7 +18,6 @@ void Particle::update(float time) {
 	lifespan -= time;
 	if (lifespan <= 0) {
 		Destroy();
-		cout << "Destroying at lifespan = " << lifespan << endl;
 	}
 
 	this->updatePosition(time);
