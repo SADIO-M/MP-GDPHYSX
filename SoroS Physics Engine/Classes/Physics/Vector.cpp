@@ -55,9 +55,6 @@ Vector Vector::operator* (const float scalar) {
 		this->y * scalar,
 		this->z * scalar
 	);
-	//this->x *= scalar;
-	//this->y *= scalar;
-	//this->z *= scalar;
 }
 void Physics::Vector::operator+=(const Vector RHS)
 {
