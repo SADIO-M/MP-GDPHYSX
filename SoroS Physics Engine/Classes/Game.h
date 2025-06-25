@@ -32,14 +32,16 @@ private:
     float windowHeight;
 
     // Sphere Object and VAO
-    vector<Model3D*> allModels;
+    Model3D* sphereObj;
     GLuint sphereVAO;
     
     // Orthographic camera
     Orthographic* orthoCam;
     Perspective* persCam;
 
-    CAM_TYPE camOn;
+    CAM_TYPE camOn = ORTHOGRAPHIC;
+    bool play = false;
+    float inputCooldown = 0;
 public:
     //CONSTRUCTORS
     Game();

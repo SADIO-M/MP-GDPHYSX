@@ -74,7 +74,7 @@ int main(void)
     }
 
     //Set window position so window spawns at the same place every time
-    glfwSetWindowPos(window, 960 - (windowWidth/2), 540 - (windowHeight / 2));
+    glfwSetWindowPos(window, 1080, 540 - (windowHeight / 2));
 
     //Create, start, then deconstruct game when finished
     Game game(window, windowWidth, windowHeight);

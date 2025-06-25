@@ -7,8 +7,6 @@ Game::Game(GLFWwindow* window, float windowWidth, float windowHeight) {
 	this->window = window;
 	this->windowWidth = windowWidth;
 	this->windowHeight = windowHeight;
-
-	camOn = ORTHOGRAPHIC;
 }
 
 //FUNCTIONS
@@ -28,7 +26,7 @@ void Game::initialize() {
 	Vector zero(0, 0 ,0);
 	setVAO(&sphereVAO, GENERATE);
 	setVAO(&sphereVAO, BIND);
-	Object createVAO = Object(
+	sphereObj = new Object(
 		"3D/sphere.obj",
 		(vec3)zero,
 		(vec3)zero,
@@ -78,8 +76,6 @@ void Game::run() {
 	chrono::nanoseconds curr_ns(0);
 	
 	PhysicsWorld physWorld = PhysicsWorld();
-
-	//////////////////////RENDER PARTICLE LIST//////////////////////
 	list<RenderParticle*> renderParticles;
 
 	int sparkNum = 0;
@@ -87,26 +83,27 @@ void Game::run() {
 	cin >> sparkNum;
 	cout << endl;
 
-	// TESTING FACTORY //
-	RenderParticleFactory renParFactory(&allModels, &physWorld);
+	cout << "Loading sparks..." << endl << endl;
 
+	RenderParticleFactory renParFactory(&physWorld);
 	for (int i = 0; i < sparkNum; i++) {
 		renderParticles.push_back(renParFactory.create());
 	}
 
-	// END OF TESTING FACTORY //
+	cout << "Press [SPACE] to launch sparks!" << endl; 
 
 	//////////////////////MAIN LOOP//////////////////////
 	while (!glfwWindowShouldClose(window))
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		checkInput();
-
 		//GETS CURRENT TIME
 		currTime = clock::now();
 		auto duration = chrono::duration_cast<chrono::nanoseconds> (currTime - prevTime);
 		prevTime = currTime;
+
+		checkInput();
+		inputCooldown++;
 
 		curr_ns += duration;
 		if (curr_ns >= timestep) {
@@ -117,16 +114,14 @@ void Game::run() {
 			orthoCam->update();
 			persCam->update();
 
-			physWorld.update((float)ms.count() / 1000);
+			if(play) physWorld.update((float)ms.count() / 1000);
 		}
 		
 		//All objects use the same shader anyway
-		glUseProgram(allModels[0]->getShader().getShaderProg());
-
-		if(camOn == ORTHOGRAPHIC)
-			orthoCam->draw(allModels[0]->getShader().getShaderProg());
-		else
-			persCam->draw(allModels[0]->getShader().getShaderProg());
+		glUseProgram(sphereObj->getShader().getShaderProg());
+		//Change view depending on which camera is active
+		if(camOn == ORTHOGRAPHIC) orthoCam->draw(sphereObj->getShader().getShaderProg());
+		else persCam->draw(sphereObj->getShader().getShaderProg());
 
 		setVAO(&sphereVAO, BIND);
 		for (list<RenderParticle*>::iterator r = renderParticles.begin(); r != renderParticles.end(); r++) {
@@ -142,7 +137,10 @@ void Game::checkInput()
 {
 	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) camOn = ORTHOGRAPHIC;
 	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) camOn = PERSPECTIVE;
-
+	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS && inputCooldown >= 1000) {
+		play = !play;
+		inputCooldown = 0;
+	}
 	//if (camOn == PERSPECTIVE) {
 	//	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) persCam->rotateWithKeys('W');
 	//	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) persCam->rotateWithKeys('S');
@@ -180,8 +178,5 @@ void Game::setVAO(GLuint* VAO, int type) {
 
 //DECONSTRUCTOR
 Game::~Game() {
-	for (Model3D* model : allModels)
-		model->~Model3D();
-
 	glDeleteVertexArrays(1, &sphereVAO);
 }

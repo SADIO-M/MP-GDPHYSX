@@ -45,14 +45,14 @@ void Object::loadObject() {
 
    //Object transformations
 void Object::update(){
-    transformation_matrix = translate(identity_matrix, position);
-    transformation_matrix = scale(transformation_matrix, scaling);
-    transformation_matrix = rotate(transformation_matrix, radians(rotation.x), vec3(1, 0, 0));
-    transformation_matrix = rotate(transformation_matrix, radians(rotation.y), vec3(0, 1, 0));
-    transformation_matrix = rotate(transformation_matrix, radians(rotation.z), vec3(0, 0, 1));
+    transformationMatrix = translate(identityMatrix, position);
+    transformationMatrix = scale(transformationMatrix, scaling);
+    transformationMatrix = rotate(transformationMatrix, radians(rotation.x), vec3(1, 0, 0));
+    transformationMatrix = rotate(transformationMatrix, radians(rotation.y), vec3(0, 1, 0));
+    transformationMatrix = rotate(transformationMatrix, radians(rotation.z), vec3(0, 0, 1));
 
     GLuint transformLocation = glGetUniformLocation(shaderMaker.getShaderProg(), "transform");
-    glUniformMatrix4fv(transformLocation, 1, GL_FALSE, value_ptr(transformation_matrix));
+    glUniformMatrix4fv(transformLocation, 1, GL_FALSE, value_ptr(transformationMatrix));
 
     GLuint colorAddress = glGetUniformLocation(shaderMaker.getShaderProg(), "color");
     glUniform3fv(colorAddress, 1, value_ptr(color));

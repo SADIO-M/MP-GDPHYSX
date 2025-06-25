@@ -26,8 +26,8 @@ protected:
     Shader shaderMaker;
 
     // For Transformations
-    mat4 transformation_matrix;
-    mat4 identity_matrix = mat4(1.0f);
+    mat4 transformationMatrix;
+    mat4 identityMatrix = mat4(1.0f);
 
     // Vectors on relevant transformation info
     vec3 position;

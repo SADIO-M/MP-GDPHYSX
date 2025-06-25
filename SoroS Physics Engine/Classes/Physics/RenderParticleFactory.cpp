@@ -1,8 +1,8 @@
 #include "RenderParticleFactory.h"
 
-Physics::RenderParticleFactory::RenderParticleFactory(vector<Model3D*>* allModels, PhysicsWorld* physWorld)
+Physics::RenderParticleFactory::RenderParticleFactory(PhysicsWorld* physWorld)
 {
-	allGameModels = allModels;
+	generator.seed(random_device{}());
 	physicsWorld = physWorld;
 }
 
@@ -15,7 +15,7 @@ RenderParticle* Physics::RenderParticleFactory::create()
 	Vector vecRot(0, 0, 0);
 	Vector vecColor(randomizeFloat(0.0f, 1.0f), randomizeFloat(0.0f, 1.0f), randomizeFloat(0.0f, 1.0f));
 	
-	allGameModels->push_back(new Object(
+	Model3D* sphere = new Object(
 		"3D/sphere.obj",
 		(vec3)vecPos,
 		(vec3)vecScale,
@@ -23,7 +23,7 @@ RenderParticle* Physics::RenderParticleFactory::create()
 		"Shaders/ObjectShader.vert",
 		"Shaders/ObjectShader.frag",
 		(vec3)vecColor
-	));
+	);
 
 	// MAKING THE PARTILE //
 	Particle* particle = new Particle();
@@ -34,7 +34,7 @@ RenderParticle* Physics::RenderParticleFactory::create()
 	particle->lifespan = randomizeFloat(minLifespan, maxLifespan);
 	physicsWorld->addParticle(particle);
 
-	RenderParticle* renPar = new RenderParticle(particle, allGameModels->back(), vecColor);
+	RenderParticle* renPar = new RenderParticle(particle, sphere, vecColor);
 
 	return renPar;
 }

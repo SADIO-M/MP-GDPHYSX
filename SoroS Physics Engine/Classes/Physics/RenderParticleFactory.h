@@ -7,7 +7,6 @@ namespace Physics {
 	class RenderParticleFactory {
 	private:
 		default_random_engine generator;
-		vector<Model3D*>* allGameModels;
 		PhysicsWorld* physicsWorld;
 
 		// Setting min and max of variables
@@ -16,7 +15,7 @@ namespace Physics {
 		float minLifespan = 1.0f;
 		float maxLifespan = 10.0f;
 	public:
-		RenderParticleFactory(vector<Model3D*>* allModels, PhysicsWorld* physWorld);
+		RenderParticleFactory(PhysicsWorld* physWorld);
 		RenderParticle* create();
 
 		// Helper Functions
