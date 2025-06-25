@@ -1,33 +1,37 @@
 #include "RenderParticle.h"
 
 // CONSTRUCTORS
-RenderParticle::RenderParticle() {}
+using namespace Physics;
 
-RenderParticle::RenderParticle(Particle* particle, Model3D* obj) {
-	physicsParticle = particle;
-	objectToRender = obj;
-	color = Vector(1, 1, 1);
-}
+namespace Physics{
+	RenderParticle::RenderParticle() {}
 
-RenderParticle::RenderParticle(Particle* particle, Model3D* obj, Vector color) {
-	physicsParticle = particle;
-	objectToRender = obj;
-	this->color = color;
-}
-
-// Draw the particle, specifically the model
-void RenderParticle::draw() {
-	Object* obj = dynamic_cast<Object*>(objectToRender);
-
-	// If the particle is not destroyed, render it
-	if (!physicsParticle->IsDestroyed()) {
-		obj->setColor((vec3)color);
-		obj->updatePos(physicsParticle->position);
-		obj->draw();
+	RenderParticle::RenderParticle(Particle* particle, Model3D* obj) {
+		physicsParticle = particle;
+		objectToRender = obj;
+		color = Vector(1, 1, 1);
 	}
 
-	// Sets the status of the render particle to destroyed if the particle has been destroyed
-	else {
-		isDestroyed = true;
+	RenderParticle::RenderParticle(Particle* particle, Model3D* obj, Vector color) {
+		physicsParticle = particle;
+		objectToRender = obj;
+		this->color = color;
+	}
+
+	// Draw the particle, specifically the model
+	void RenderParticle::draw() {
+		Object* obj = dynamic_cast<Object*>(objectToRender);
+
+		// If the particle is not destroyed, render it
+		if (!physicsParticle->IsDestroyed()) {
+			obj->setColor((vec3)color);
+			obj->updatePos(physicsParticle->position);
+			obj->draw();
+		}
+
+		// Sets the status of the render particle to destroyed if the particle has been destroyed
+		else {
+			isDestroyed = true;
+		}
 	}
 }

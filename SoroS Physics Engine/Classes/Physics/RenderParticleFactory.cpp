@@ -1,59 +1,63 @@
 #include "RenderParticleFactory.h"
 
-// CONSTRUCTOR
-Physics::RenderParticleFactory::RenderParticleFactory(PhysicsWorld* physWorld)
-{
-	generator.seed(random_device{}()); // feeds a seed into the randomizer
-	physicsWorld = physWorld;
-}
+using namespace Physics;
 
-/*
-*	Creates the sphere model, physics particle, and the render particle to hold both.
-*		- Also adds the physics particle to the particle list in Game
-*		- Handles the randomized properties of the particle
-*/
-RenderParticle* Physics::RenderParticleFactory::create()
-{
-	// MAKING THE SPHERE OBJECT // 
-	Vector vecPos(0, -600, 0);
-	float scale = randomizeFloat(minRadius, maxRadius); // Random scale
-		Vector vecScale(scale, scale, scale);
-	Vector vecRot(0, 0, 0);
-	Vector vecColor(randomizeFloat(0.0f, 1.0f), randomizeFloat(0.0f, 1.0f), randomizeFloat(0.0f, 1.0f)); // Random color
+namespace Physics{
+	// CONSTRUCTOR
+	Physics::RenderParticleFactory::RenderParticleFactory(PhysicsWorld* physWorld)
+	{
+		generator.seed(random_device{}()); // feeds a seed into the randomizer
+		physicsWorld = physWorld;
+	}
+
+	/*
+	*	Creates the sphere model, physics particle, and the render particle to hold both.
+	*		- Also adds the physics particle to the particle list in Game
+	*		- Handles the randomized properties of the particle
+	*/
+	RenderParticle* Physics::RenderParticleFactory::create()
+	{
+		// MAKING THE SPHERE OBJECT // 
+		Vector vecPos(0, -600, 0);
+		float scale = randomizeFloat(minRadius, maxRadius); // Random scale
+			Vector vecScale(scale, scale, scale);
+		Vector vecRot(0, 0, 0);
+		Vector vecColor(randomizeFloat(0.0f, 1.0f), randomizeFloat(0.0f, 1.0f), randomizeFloat(0.0f, 1.0f)); // Random color
 	
-	Model3D* sphere = new Object(
-		"3D/sphere.obj",
-		(vec3)vecPos,
-		(vec3)vecScale,
-		(vec3)vecRot,
-		"Shaders/ObjectShader.vert",
-		"Shaders/ObjectShader.frag",
-		(vec3)vecColor
-	);
+		Model3D* sphere = new Object(
+			"3D/sphere.obj",
+			(vec3)vecPos,
+			(vec3)vecScale,
+			(vec3)vecRot,
+			"Shaders/ObjectShader.vert",
+			"Shaders/ObjectShader.frag",
+			(vec3)vecColor
+		);
 
-	// MAKING THE PARTICLE //
-	Particle* particle = new Particle();
+		// MAKING THE PARTICLE //
+		Particle* particle = new Particle();
 
-	particle->position = vecPos;
-		// Randomizing the particle's initial velocity to imitate fountain firework effect
-	Vector vel(randomizeFloat(-100.0f, 100.0f), randomizeFloat(100.f, 250.0f), randomizeFloat(-100.0f, 100.0f));
-	particle->velocity = vel;
-		// Random lifespan
-	particle->lifespan = randomizeFloat(minLifespan, maxLifespan); 
+		particle->position = vecPos;
+			// Randomizing the particle's initial velocity to imitate fountain firework effect
+		Vector vel(randomizeFloat(-100.0f, 100.0f), randomizeFloat(100.f, 250.0f), randomizeFloat(-100.0f, 100.0f));
+		particle->velocity = vel;
+			// Random lifespan
+		particle->lifespan = randomizeFloat(minLifespan, maxLifespan); 
 
-		// Adding the particle to the physics world
-	physicsWorld->addParticle(particle);
+			// Adding the particle to the physics world
+		physicsWorld->addParticle(particle);
 
-	// MAKING THE RENDER PARTICLE //
-	RenderParticle* renPar = new RenderParticle(particle, sphere, vecColor);
+		// MAKING THE RENDER PARTICLE //
+		RenderParticle* renPar = new RenderParticle(particle, sphere, vecColor);
 
-	return renPar;
-}
+		return renPar;
+	}
 
-// HELPER FUNCION
+	// HELPER FUNCION
 
-float Physics::RenderParticleFactory::randomizeFloat(float min, float max)
-{
-	uniform_real_distribution<double> distribution(min, max);
-	return distribution(generator);
+	float Physics::RenderParticleFactory::randomizeFloat(float min, float max)
+	{
+		uniform_real_distribution<double> distribution(min, max);
+		return distribution(generator);
+	}
 }
