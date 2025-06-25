@@ -29,28 +29,6 @@ void Perspective::rotateWithMouse(dvec2* prevMousePos, dvec2* currMousePos) {
 	prevMousePos->y = currMousePos->y;
 }
 
-/*
-	This function allows camera rotation with the keys (I, J, K, L)
-*/
-//void Perspective::rotateWithKeys(char keyPressed) {
-//	switch (keyPressed) {
-//		case 'W': cameraRotation.x += rotateSpeed;
-//			break;
-//		case 'S': cameraRotation.x -= rotateSpeed;
-//			break;
-//		case 'A': cameraRotation.y -= rotateSpeed;
-//			break;
-//		case 'D': cameraRotation.y += rotateSpeed;
-//			break;
-//	}
-//}
-
-/*
-	This function checks the camera's rotation on the x-axis 
-		- This is because when the x rotation goes over a certain threshold, the camera flips
-		- This is to avoid that camera flipping for a cleaner experience
-*/
-
 void Perspective::update()
 {
 	rotateCamera();

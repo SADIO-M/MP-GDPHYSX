@@ -9,32 +9,32 @@ Physics::RenderParticleFactory::RenderParticleFactory(vector<Model3D*>* allModel
 RenderParticle* Physics::RenderParticleFactory::create()
 {
 	// make and push sphere into game's allModels vector
-	Vector defaultPos(0, -600, 0);
+	Vector vecPos(0, -600, 0);
 	float scale = randomizeFloat(minRadius, maxRadius);
-	Vector myVecScale(scale, scale, scale);
-	Vector myVecRot(0, 0, 0);
-	Vector color(randomizeFloat(0.0f, 1.0f), randomizeFloat(0.0f, 1.0f), randomizeFloat(0.0f, 1.0f));
+	Vector vecScale(scale, scale, scale);
+	Vector vecRot(0, 0, 0);
+	Vector vecColor(randomizeFloat(0.0f, 1.0f), randomizeFloat(0.0f, 1.0f), randomizeFloat(0.0f, 1.0f));
 	
 	allGameModels->push_back(new Object(
 		"3D/sphere.obj",
-		(vec3)defaultPos,
-		(vec3)myVecScale,
-		(vec3)myVecRot,
+		(vec3)vecPos,
+		(vec3)vecScale,
+		(vec3)vecRot,
 		"Shaders/ObjectShader.vert",
 		"Shaders/ObjectShader.frag",
-		(vec3)color
+		(vec3)vecColor
 	));
 
 	// MAKING THE PARTILE //
 	Particle* particle = new Particle();
-	particle->position = defaultPos;
+	particle->position = vecPos;
 	// [ TEMP ] assigning random initial velocity to particles so they shoot up
-	Vector vel(randomizeFloat(-30.0f, 30.0f), randomizeFloat(1.0f, 100.0f), randomizeFloat(-30.0f, 30.0f));
+	Vector vel(randomizeFloat(-50.0f, 50.0f), randomizeFloat(50.f, 250.0f), randomizeFloat(-50.0f, 50.0f));
 	particle->velocity = vel;
-	particle->lifespan = randomizeFloat(minLifespan, maxLifespan) * 5;
+	particle->lifespan = randomizeFloat(minLifespan, maxLifespan);
 	physicsWorld->addParticle(particle);
 
-	RenderParticle* renPar = new RenderParticle(particle, allGameModels->back(), color);
+	RenderParticle* renPar = new RenderParticle(particle, allGameModels->back(), vecColor);
 
 	return renPar;
 }

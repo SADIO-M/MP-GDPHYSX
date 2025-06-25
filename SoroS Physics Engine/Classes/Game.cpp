@@ -24,27 +24,20 @@ void Game::start() {
 
   //Initializes the sphere and orthographic camera and time
 void Game::initialize() {
-	Vector defaultPos(0, 0 ,0);
-	Vector myVecScale(10, 10, 10);
-	Vector myVecRot(0, 0, 0);
-	Vector color1(0.8f, 0.7f, 0.0f);
-	
-	//Load Sphere
+	// Load the sphere VAO
+	Vector zero(0, 0 ,0);
 	setVAO(&sphereVAO, GENERATE);
 	setVAO(&sphereVAO, BIND);
-		//1
-	allModels.push_back(new Object(
+	Object createVAO = Object(
 		"3D/sphere.obj",
-		(vec3)defaultPos,
-		(vec3)myVecScale,
-		(vec3)myVecRot,
+		(vec3)zero,
+		(vec3)zero,
+		(vec3)zero,
 		"Shaders/ObjectShader.vert",
 		"Shaders/ObjectShader.frag",
-		(vec3)color1
-	));
+		(vec3)zero
+	);
 	setVAO(&sphereVAO, UNBIND);
-
-	//Create Orthographic Camera
 
 	//Create Orthographic Camera
 	orthoCam = new Orthographic(
@@ -115,21 +108,12 @@ void Game::run() {
 		auto duration = chrono::duration_cast<chrono::nanoseconds> (currTime - prevTime);
 		prevTime = currTime;
 
-		//STOP RENDERING OBJECT IF AT CENTER
-		//for (list<Particle*>::iterator p = physWorld.getParticleList()->begin(); p != physWorld.getParticleList()->end(); p++) {
-		//	if ((*p)->atCenter()) (*p)->Destroy();
-		//}
-
 		curr_ns += duration;
 		if (curr_ns >= timestep) {
 			auto ms = chrono::duration_cast<chrono::milliseconds>(curr_ns);
 			//RESET
 			curr_ns -= curr_ns;
 
-			//UPDATE Camera only in fixed update
-			// EITHER UPDATE ONLY 1 CAM OR BOTH AND JUST SWITCH
-			//if (camOn == ORTHOGRAPHIC) orthoCam->update();
-			//else persCam->update();
 			orthoCam->update();
 			persCam->update();
 
@@ -145,7 +129,6 @@ void Game::run() {
 			persCam->draw(allModels[0]->getShader().getShaderProg());
 
 		setVAO(&sphereVAO, BIND);
-
 		for (list<RenderParticle*>::iterator r = renderParticles.begin(); r != renderParticles.end(); r++) {
 			(*r)->draw();
 		}
