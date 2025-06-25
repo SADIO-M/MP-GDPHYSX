@@ -45,29 +45,31 @@ void Game::initialize() {
 	setVAO(&sphereVAO, UNBIND);
 
 	//Create Orthographic Camera
+
+	//Create Orthographic Camera
 	orthoCam = new Orthographic(
-        windowWidth,                 
-		windowHeight,                 
-        -200.0f,                 
-         200.0f,                 
-        vec3(0.0, 0.0, 5.0),  
-        vec3(0.0),
+		windowWidth,
+		windowHeight,
+		-500.0f,
+		500.0f,
+		vec3(0.0, 0.0, 5.0),
 		vec3(0.0),
-        -800.0f,                 
-         800.0f,                  
-        -800.0f,                
-         800.0f                  
+		vec3(0.0),
+		-800.0f,
+		800.0f,
+		-800.0f,
+		800.0f
 	);
 
 	persCam = new Perspective(
 		windowWidth,
 		windowHeight,
-		0.1f,                   
-		1000.0f,                 
-		vec3(0.0, 0.0, 900.0),
+		0.1f,
+		1000.0f,
+		vec3(0.0, 0.0, 500.0),
 		vec3(0.0),
 		vec3(0.0),
-		80.0
+		100.0
 	);
 
 	//Runs the game
