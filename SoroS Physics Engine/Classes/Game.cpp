@@ -81,12 +81,9 @@ void Game::run() {
 		cout << "Enter spark number: ";
 		cin >> sparkNum;
 		cout << endl;
-		//cout << "Loading sparks..." << endl << endl;
 
 	RenderParticleFactory renParFactory(&physWorld);
 	list<RenderParticle*> renderParticles;
-
-	cout << "Press [SPACE] to launch sparks!" << endl; 
 
 	//////////////////////MAIN LOOP//////////////////////
 	while (!glfwWindowShouldClose(window))

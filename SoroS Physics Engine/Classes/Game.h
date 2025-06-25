@@ -40,7 +40,7 @@ private:
     Perspective* persCam;
 
     CAM_TYPE camOn = ORTHOGRAPHIC;
-    bool play = false;
+    bool play = true;
     float inputCooldown = 0;
 
 public:
