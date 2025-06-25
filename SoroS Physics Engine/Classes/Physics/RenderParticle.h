@@ -7,8 +7,9 @@
 #include "../../Config/namespace.h"
 
 /*
-*	Render particle from class code.
+*	Render particle class
 *		- Modified to keep track of particle life status.
+*		- Makes "destroying" particles and its model easier
 */
 namespace Physics {
 	class RenderParticle {

@@ -2,16 +2,27 @@
 
 using namespace Physics;
 
+/*
+*	Adds particle to list, also automatically registers it with gravity
+*/
 void PhysicsWorld::addParticle(Particle* toAdd) {
 	Particles.push_back(toAdd);
 
 	forceRegistry.add(toAdd, &gravity);
 }
 
+/*
+*	Returns particle list
+*/
 list<Particle*>* PhysicsWorld::getParticleList() {
 	return &Particles;
 }
 
+/*
+*	Updates the following things:
+*		- Calls the update for all particles in the list
+*		- Updates all the forces in the force registry
+*/
 void PhysicsWorld::update(float time){
 	updateParticleList();
 
@@ -22,6 +33,9 @@ void PhysicsWorld::update(float time){
 	}
 }
 
+/*
+*	Updates all particles in the list, removes it if it is destroyed
+*/
 void PhysicsWorld::updateParticleList() {
 	Particles.remove_if(
 		[](Particle* p) {
@@ -30,6 +44,9 @@ void PhysicsWorld::updateParticleList() {
 	);
 }
 
+/*
+*	Returns a particle at a certain index
+*/
 Particle* PhysicsWorld::getParticleAtIndex(int index) {
 	list<Particle*>::iterator particle = Particles.begin();
 	advance(particle, index);

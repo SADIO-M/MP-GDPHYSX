@@ -56,18 +56,21 @@ Vector Vector::operator* (const float scalar) {
 		this->z * scalar
 	);
 }
+	///// Addition
 void Physics::Vector::operator+=(const Vector RHS)
 {
 	this->x += RHS.x;
 	this->y += RHS.y;
 	this->z += RHS.z;
 }
+	///// Subtraction
 void Physics::Vector::operator-=(const Vector RHS)
 {
 	this->x -= RHS.x;
 	this->y -= RHS.y;
 	this->z -= RHS.z;
 }
+	///// Scalar Multiplication
 void Physics::Vector::operator*=(const float scalar)
 {
 	this->x *= scalar;

@@ -1,5 +1,6 @@
 #include "RenderParticle.h"
 
+// CONSTRUCTORS
 RenderParticle::RenderParticle() {}
 
 RenderParticle::RenderParticle(Particle* particle, Model3D* obj) {
@@ -14,9 +15,11 @@ RenderParticle::RenderParticle(Particle* particle, Model3D* obj, Vector color) {
 	this->color = color;
 }
 
+// Draw the particle, specifically the model
 void RenderParticle::draw() {
 	Object* obj = dynamic_cast<Object*>(objectToRender);
 
+	// If the particle is not destroyed, render it
 	if (!physicsParticle->IsDestroyed()) {
 		obj->setColor((vec3)color);
 		obj->updatePos(physicsParticle->position);
