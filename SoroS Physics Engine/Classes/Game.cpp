@@ -84,6 +84,7 @@ void Game::run() {
 		//cout << "Loading sparks..." << endl << endl;
 
 	RenderParticleFactory renParFactory(&physWorld);
+	list<RenderParticle*> renderParticles;
 
 	cout << "Press [SPACE] to launch sparks!" << endl; 
 
@@ -109,10 +110,12 @@ void Game::run() {
 			orthoCam->update();
 			persCam->update();
 
-			if(play) physWorld.update((float)ms.count() / 1000);
+			if (play) {
+				physWorld.update((float)ms.count() / 1000);
 
-			if (renderParticles.size() < sparkNum) {
-				renderParticles.push_back(renParFactory.create());
+				if (renderParticles.size() < sparkNum) {
+					renderParticles.push_back(renParFactory.create());
+				}
 			}
 		}
 		
@@ -126,16 +129,16 @@ void Game::run() {
 		for (list<RenderParticle*>::iterator r = renderParticles.begin(); r != renderParticles.end(); r++) {
 			(*r)->draw();
 		}
-		cleanRenderParticles();
+		cleanRenderParticles(&renderParticles);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
 }
 
-void Game::cleanRenderParticles()
+void Game::cleanRenderParticles(list<RenderParticle*>* renderParticles)
 {
-	renderParticles.remove_if(
+	renderParticles->remove_if(
 		[](RenderParticle* p) {
 			return p->isDestroyed;
 		}
