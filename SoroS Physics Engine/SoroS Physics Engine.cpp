@@ -45,6 +45,7 @@
 #include "Classes/Physics/ForceRegistry.h"
 #include "Classes/Physics/GravityForceGenerator.h"
 #include "Classes/Physics/DragForceGenerator.h"
+#include "Classes/Physics/RenderParticleFactory.h"
 /* MODEL-RELATED CLASSES */
 #include "Classes/Models/Model3D.h"
 #include "Classes/Models/Object.h"
