@@ -79,11 +79,10 @@ void Game::run() {
 	list<RenderParticle*> renderParticles;
 
 	int sparkNum = 0;
-	cout << "Enter spark number: ";
-	cin >> sparkNum;
-	cout << endl;
-
-	cout << "Loading sparks..." << endl << endl;
+		cout << "Enter spark number: ";
+		cin >> sparkNum;
+		cout << endl;
+		cout << "Loading sparks..." << endl << endl;
 
 	RenderParticleFactory renParFactory(&physWorld);
 	for (int i = 0; i < sparkNum; i++) {
@@ -135,30 +134,19 @@ void Game::run() {
 
 void Game::checkInput()
 {
+	// Camera Switching
 	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) camOn = ORTHOGRAPHIC;
 	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) camOn = PERSPECTIVE;
+	// Pause / Play
 	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS && inputCooldown >= 1000) {
 		play = !play;
 		inputCooldown = 0;
 	}
-	//if (camOn == PERSPECTIVE) {
-	//	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) persCam->rotateWithKeys('W');
-	//	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) persCam->rotateWithKeys('S');
-	//	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) persCam->rotateWithKeys('A');
-	//	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) persCam->rotateWithKeys('D');
-	//}
-	//else {
-	//	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) orthoCam->rotateWithKeys('W');
-	//	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) orthoCam->rotateWithKeys('S');
-	//	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) orthoCam->rotateWithKeys('A');
-	//	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) orthoCam->rotateWithKeys('D');
-	//}
+	// Camera Rotation
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) { persCam->rotateWithKeys('W'); orthoCam->rotateWithKeys('W'); }
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) { persCam->rotateWithKeys('S'); orthoCam->rotateWithKeys('S'); }
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) { persCam->rotateWithKeys('A'); orthoCam->rotateWithKeys('A'); }
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) { persCam->rotateWithKeys('D'); orthoCam->rotateWithKeys('D'); }
-
-
 }
 
   //For proper VAO handling

@@ -12,7 +12,6 @@ namespace Physics{
 			Vector acceleration;	//Current Acceleration
 
 			float lifespan;
-			float life = 0.0f;
 
 		protected:
 			//Default drag value

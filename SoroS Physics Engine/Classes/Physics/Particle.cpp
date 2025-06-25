@@ -15,10 +15,10 @@ void Particle::updateVelocity(float time) {
 
 void Particle::update(float time) {
 	// Life maintenance
-	life += time;
-	if (life >= lifespan) {
+	lifespan -= time;
+	if (lifespan <= 0) {
 		Destroy();
-		cout << "Destroying at Life = " << life << " and lifespan = " << lifespan << endl;
+		cout << "Destroying at lifespan = " << lifespan << endl;
 	}
 
 	this->updatePosition(time);
