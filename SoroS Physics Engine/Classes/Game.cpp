@@ -120,6 +120,7 @@ void Game::run() {
 			orthoCam->update();
 			persCam->update();
 
+			// Will only update if the game is playing
 			if (play) {
 				physWorld.update((float)ms.count() / 1000);
 
