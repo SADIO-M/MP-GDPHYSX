@@ -32,8 +32,5 @@ namespace Physics{
 
 			void Destroy();
 			bool IsDestroyed();
-
-			//Checking
-			bool atCenter();
 	};
 }

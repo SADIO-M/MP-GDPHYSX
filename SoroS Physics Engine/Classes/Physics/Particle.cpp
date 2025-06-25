@@ -44,14 +44,3 @@ void Particle::Destroy() {
 bool Particle::IsDestroyed() {
 	return isDestroyed;
 }
-
-bool Particle::atCenter() {
-	float distance = sqrt(
-		pow((position.x - 0), 2) +
-		pow((position.y - 0), 2) +
-		pow((position.z - 0), 2)
-	);
-
-	if (distance < 1) return true;
-	else return false;
-}
