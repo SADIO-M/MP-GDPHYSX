@@ -1,5 +1,5 @@
 /*
-////////// PHASE 1 : GDPHYSX - S22 //////////
+////////// PHASE 2 : GDPHYSX - S22 //////////
     Submitted by:
         MONTUERTO, Yzabelle Anne A.
         SADIO, Megan Florence Sophia C.
