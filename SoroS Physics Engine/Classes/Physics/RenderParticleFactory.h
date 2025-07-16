@@ -26,6 +26,8 @@ namespace Physics {
 		RenderParticleFactory(PhysicsWorld* physWorld);
 			// Returns a pointer to the created render particle
 		RenderParticle* create();
+		RenderParticle* create(Vector position, float scale, Vector color, // Model info
+							   Vector velocity, float lifespan);           // Particle info
 
 		// Helper Function
 		float randomizeFloat(float min, float max);

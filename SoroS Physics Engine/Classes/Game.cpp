@@ -84,18 +84,45 @@ void Game::run() {
 	PhysicsWorld physWorld = PhysicsWorld();
 	
 	// Accepts player input for the number of sparks allowed on screen
-	int sparkNum = 0;
-		cout << "Enter spark number: ";
-		cin >> sparkNum;
+	float cableLength = 0.f;
+		cout << "Cable Length: ";
+		cin >> cableLength;
 		cout << endl;
+	float particleGap = 0.f;
+		cout << "Particle Gap: ";
+		cin >> particleGap;
+		cout << endl;
+	float particleRadius = 0.f;
+		cout << "Particle Radus: ";
+		cin >> particleRadius;
+		cout << endl;
+	float gravityStrength = 0.f;
+		cout << "Particle Radus: ";
+		cin >> gravityStrength;
+		cout << endl;
+	Vector force;
+		cout << "Apply Force\nX: ";	
+		cin >> force.x;
+		cout << "Y: ";	
+		cin >> force.y;
+		cout << "Z: ";	
+		cin >> force.z;
 	
-	/*
-	* Render particle factory which takes a pointer to VAR : [physWorld] to update particles
-	*	- Responsible for spawning in new sparks
-	*/ 
 	RenderParticleFactory renParFactory(&physWorld);
-		// List of all render particles
 	list<RenderParticle*> renderParticles;
+
+	// Assembles the Newton's cradle
+	Vector orbColor(0.5f, 0.1f, 0.4f);
+	float firstPosValue = -((particleGap * 3) + (particleRadius * 6));
+	for (int i = 0; i < 5; i++) {
+		firstPosValue += (particleGap + (particleRadius * 2));
+		Vector orbPosition(firstPosValue, 0.f, 0.f);
+
+		renderParticles.push_back(renParFactory.create(
+			orbPosition, particleRadius, orbColor,
+			Vector(0.f, 0.f, 0.f), 0.f
+			));
+	}
 
 	//////////////////////MAIN LOOP//////////////////////
 	while (!glfwWindowShouldClose(window))
@@ -123,11 +150,6 @@ void Game::run() {
 			// Will only update if the game is playing
 			if (play) {
 				physWorld.update((float)ms.count() / 1000);
-
-				// Will continuously spawn sparks as long as the max amount of sparks is not reached
-				if (renderParticles.size() < sparkNum) {
-					renderParticles.push_back(renParFactory.create());
-				}
 			}
 		}
 		

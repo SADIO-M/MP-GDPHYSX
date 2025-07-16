@@ -57,6 +57,9 @@ public:
 
     //GETTERS
     virtual Shader getShader();
+
+    //SETTER
+    virtual void setScale(vec3 scale);
     
     //DECONSTRUCTOR
     ~Model3D();

@@ -53,6 +53,38 @@ namespace Physics{
 		return renPar;
 	}
 
+	RenderParticle* RenderParticleFactory::create(Vector position, float scale, Vector color, Vector velocity, float lifespan)
+	{
+		// MAKING THE SPHERE OBJECT // 
+		Vector vecScale(scale, scale, scale);
+		Vector vecRot(0, 0, 0);
+
+		Model3D* sphere = new Object(
+			"3D/sphere.obj",
+			(vec3)position,
+			(vec3)vecScale,
+			(vec3)vecRot,
+			"Shaders/ObjectShader.vert",
+			"Shaders/ObjectShader.frag",
+			(vec3)color
+		);
+
+		// MAKING THE PARTICLE //
+		Particle* particle = new Particle();
+
+		particle->position = position;
+		particle->velocity = velocity;
+		particle->lifespan = lifespan;
+
+		// Adding the particle to the physics world
+		physicsWorld->addParticle(particle);
+
+		// MAKING THE RENDER PARTICLE //
+		RenderParticle* renPar = new RenderParticle(particle, sphere, color);
+
+		return renPar;
+	}
+
 	// HELPER FUNCION
 
 	float Physics::RenderParticleFactory::randomizeFloat(float min, float max)

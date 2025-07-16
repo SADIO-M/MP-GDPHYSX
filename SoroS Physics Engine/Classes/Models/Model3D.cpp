@@ -90,6 +90,12 @@ void Model3D::updatePos(Vector newPos) {
 //GETTERS
 Shader Model3D::getShader() { return shaderMaker; }
 
+// SETTERS
+void Model3D::setScale(vec3 scale)
+{
+    scaling = scale;
+}
+
 //DECONSTRUCTOR
 Model3D::~Model3D() {
     glDeleteBuffers(1, &VBO);
