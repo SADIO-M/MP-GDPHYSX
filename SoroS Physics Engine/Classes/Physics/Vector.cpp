@@ -2,9 +2,9 @@
 
 using namespace Physics;
 
-namespace Physics {
+namespace Physics{
 	//CONSTRUCTORS
-	Vector::Vector() { x = 0, y = 0, z = 0; }
+	Vector::Vector(){ x = 0, y = 0, z = 0; }
 
 	Vector::Vector(const float _x, const float _y, const float _z) {
 		x = _x;
@@ -18,54 +18,38 @@ namespace Physics {
 		/* Magnitude and Direction */
 	float Vector::magnitude() {
 		return sqrt(
-			(this->x * this->x) +
-			(this->y * this->y) +
-			(this->z * this->z));
-	}
-
-	float Vector::sqrMagnitude()
-	{
-		return 
-			(this->x * this->x) +
-			(this->y * this->y) +
-			(this->z * this->z);
+			pow(this->x, 2) +
+			pow(this->y, 2) +
+			pow(this->z, 2));
 	}
 
 	Vector Vector::direction() {
 		float magnitude = Vector::magnitude();
-
+	
 		return Vector(
-			this->x / magnitude,
+			this->x / magnitude, 
 			this->y / magnitude,
 			this->z / magnitude
 		);
 	}
-
-	void Vector::normalize()
-	{
-		Vector tempDir = direction();
-		this->x = tempDir.x;
-		this->y = tempDir.y;
-		this->z = tempDir.z;
-	}
-	/* Basic Operations */
-	///// Addition
+		/* Basic Operations */
+		///// Addition
 	Vector Vector::operator+ (const Vector RHS) {
 		return Vector(
-			this->x + RHS.x,
-			this->y + RHS.y,
+			this->x + RHS.x, 
+			this->y + RHS.y, 
 			this->z + RHS.z
 		);
 	}
-	///// Subtraction
+		///// Subtraction
 	Vector Vector::operator- (const Vector RHS) {
 		return Vector(
-			this->x - RHS.x,
-			this->y - RHS.y,
+			this->x - RHS.x, 
+			this->y - RHS.y, 
 			this->z - RHS.z
 		);
 	}
-	///// Scalar Multiplication
+		///// Scalar Multiplication
 	Vector Vector::operator* (const float scalar) {
 		return Vector(
 			this->x * scalar,
@@ -73,41 +57,44 @@ namespace Physics {
 			this->z * scalar
 		);
 	}
+		///// Addition
 	void Physics::Vector::operator+=(const Vector RHS)
 	{
 		this->x += RHS.x;
 		this->y += RHS.y;
 		this->z += RHS.z;
 	}
-	void Vector::operator-=(const Vector RHS)
+		///// Subtraction
+	void Physics::Vector::operator-=(const Vector RHS)
 	{
 		this->x -= RHS.x;
 		this->y -= RHS.y;
 		this->z -= RHS.z;
 	}
-	void Vector::operator*=(const float scalar)
+		///// Scalar Multiplication
+	void Physics::Vector::operator*=(const float scalar)
 	{
 		this->x *= scalar;
 		this->y *= scalar;
 		this->z *= scalar;
 	}
-	/* Vector Products */
-	///// Component Product
-	Vector Vector::component(const Vector RHS) {
+		/* Vector Products */
+		///// Component Product
+	Vector Vector::component (const Vector RHS) {
 		return Vector(
-			this->x * RHS.x,
-			this->y * RHS.y,
+			this->x * RHS.x, 
+			this->y * RHS.y, 
 			this->z * RHS.z
 		);
 	}
-	///// Dot / Scalar Product
+		///// Dot / Scalar Product
 	float Vector::dot(const Vector RHS) {
 		return
 			(this->x * RHS.x) +
 			(this->y * RHS.y) +
 			(this->z * RHS.z);
 	}
-	///// Cross / Vector Product
+		///// Cross / Vector Product
 	Vector Vector::cross(const Vector RHS) {
 		return Vector(
 			(this->y * RHS.z) - (this->z * RHS.y),

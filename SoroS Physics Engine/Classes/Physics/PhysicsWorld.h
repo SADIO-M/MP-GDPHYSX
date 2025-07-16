@@ -4,27 +4,25 @@
 #include "Particle.h"
 #include "ForceRegistry.h"
 #include "GravityForceGenerator.h"
-#include "ParticleContact.h"
-#include "ContactResolver.h"
-#include "Links/ParticleLink.h"
-
 #include "../../Config/namespace.h"
 
+/*
+*	PhysicsWorld class
+*		- Has a list of particles
+*		- Has a force registry to know what forces affect what particles
+*		- Responsible for updating particles
+*/
 namespace Physics {
 	class PhysicsWorld {
 	public:
+		//VARIABLES
+		 // Used to apply a force to a particle
 		ForceRegistry forceRegistry;
-
-		vector<ParticleContact*> contacts;
-		void addContact(Particle* p1, Particle* p2, float restitution, Vector contactNormal, float depth);
-
-		vector<ParticleLink*> links;
-
+		 // List of all particles
 		list<Particle*> Particles;
 
+		//FUNCTIONS
 		void addParticle(Particle* toAdd);
-		//NEW
-		void addStaticParticle(Particle* toAdd);
 
 		void update(float time);
 
@@ -32,12 +30,9 @@ namespace Physics {
 		Particle* getParticleAtIndex(int index);
 
 	private:
-		GravityForceGenerator gravity = GravityForceGenerator(Vector(0, -50.0f, 0));
-		void updateParticleList();
+		 //Gravity factor
+		GravityForceGenerator gravity = GravityForceGenerator(Vector(0, -9.8f, 0));
 
-	protected:
-		ContactResolver contactResolver = ContactResolver(10);
-		void generateContacts();
-		void getOverlaps();
+		void updateParticleList();
 	};
 }

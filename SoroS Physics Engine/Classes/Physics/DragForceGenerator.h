@@ -3,11 +3,17 @@
 #include "ForceGenerator.h"
 #include "../../Config/namespace.h"
 
+/*
+*	DragForceGenerator class
+*		- child of ForceGenerator
+*		- force generator for drag
+*		- either has a default value, or the user can place specific coefficient of frictions to simulate different surfaces
+*/
 namespace Physics {
 	class DragForceGenerator : public ForceGenerator {
 	private:
 		//Coefficient of frictions
-		//Look up a table to know the friction coefficient of materials, these are arbitrary
+			//If you want to simulate differnt surfaces, construct a drag force with two coefficients
 		float k1 = 0.74f;
 		float k2 = 0.57f;
 

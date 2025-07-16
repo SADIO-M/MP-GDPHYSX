@@ -5,5 +5,10 @@
 enum VAO_BINDING {
     UNBIND = 0,
     BIND,
-    GENERATE,
+    GENERATE
+};
+
+enum CAM_TYPE {
+    PERSPECTIVE = 0,
+    ORTHOGRAPHIC
 };
