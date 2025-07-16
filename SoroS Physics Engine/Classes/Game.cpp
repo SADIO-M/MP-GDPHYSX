@@ -15,57 +15,48 @@ void Game::start() {
 	glfwMakeContextCurrent(window);
 	gladLoadGL();
 	glViewport(0, 0, windowWidth, windowHeight);
-	glEnable(GL_DEPTH_TEST);
 
 	initialize();
 }
 
-  //Initializes the sphere VAO and the cameras
+  //Initializes the sphere and orthographic camera and time
 void Game::initialize() {
-	// Load the sphere VAO
-	// Setting everything to zero because all we need is to load the shaders
-	Vector zero(0, 0 ,0);
-	Vector orthoPos(0.0, 0.0, 5.0);
-	Vector persPos(0.0, 0.0, 700.0);
-
+	Vector defaultPos(0, 0 ,0);
+	Vector myVecScale(50, 50, 50);
+	Vector myVecRot(0, 0, 0);
+	Vector color1(0.8f, 0.7f, 0.0f);
+	Vector color2(0.5f, 0.1f, 0.4f);
+	Vector noColor(0, 0, 0);
+	
+	//Load Sphere
 	setVAO(&sphereVAO, GENERATE);
 	setVAO(&sphereVAO, BIND);
-	sphereObj = new Object(
-		"3D/sphere.obj",
-		(vec3)zero,
-		(vec3)zero,
-		(vec3)zero,
-		"Shaders/ObjectShader.vert",
-		"Shaders/ObjectShader.frag",
-		(vec3)zero
-	);
+		//1
+	for(int i = 0; i < 5; i++){
+		allModels.push_back(new Object(
+			"3D/sphere.obj",
+			(vec3)defaultPos,
+			(vec3)myVecScale,
+			(vec3)myVecRot,
+			"Shaders/ObjectShader.vert",
+			"Shaders/ObjectShader.frag",
+			(vec3)color1
+		));
+	}
 	setVAO(&sphereVAO, UNBIND);
 
 	//Create Orthographic Camera
 	orthoCam = new Orthographic(
-		windowWidth,            // Window width
-		windowHeight,           // Window height
-		-1200.0f,               // zNear
-		 1200.0f,				// zFar
-		(vec3)orthoPos,	        // Camera Position
-		(vec3)zero,				// Camera Center
-		(vec3)zero,				// Camera Rotation
-		-800.0f,				// Left Point
-		 800.0f,				// Right Point
-		-800.0f,				// Bottom Point
-		 800.0f					// Top Point
-	);
-
-	//Create Perspective Camera
-	persCam = new Perspective(
-		windowWidth,            // Window width
-		windowHeight,			// Window height
-		0.1f,					// zNear
-		1200.0f,				// zFar
-		(vec3)persPos,	        // Camera Position
-		(vec3)zero,				// Camera Center
-		(vec3)zero,				// Camera Rotation
-		100.0					// Field of View (FOV)
+        windowWidth,                 
+		windowHeight,                 
+        -50.0f,                 
+         50.0f,                 
+        vec3(0.0, 0.0, 5.0),  
+        vec3(0.0),             
+        -1200.0f,                 
+         1200.0f,                  
+        -1200.0f,                
+         1200.0f                  
 	);
 
 	//Runs the game
@@ -73,108 +64,116 @@ void Game::initialize() {
 	glfwTerminate();
 }
 
-  //Runs the game, renders cameras and particles
+  //Runs the game, renders camera and sphere
 void Game::run() {
 	using clock = chrono::high_resolution_clock;
 	auto currTime = clock::now();
 	auto prevTime = currTime;
 	chrono::nanoseconds curr_ns(0);
-	
-	// Initialize a physics world
+
 	PhysicsWorld physWorld = PhysicsWorld();
+
+	//ROD
+	//Particle particle =  Particle();
+	//particle.position = Vector(-150, -100, 0);
+	//particle.mass = 10;
+	//particle.radius = 50;
+	//physWorld.addStaticParticle(&particle);
+	//
+	//Particle particle1 =  Particle();
+	//particle1.position = Vector(-250, -100, 0);
+	//particle1.mass = 10;
+	//particle1.radius = 50;
+	//physWorld.addStaticParticle(&particle1);
+	//
+	//Rod* rod = new Rod();
+	//rod->particles[0] = &particle;
+	//rod->particles[1] = &particle1;
+	//rod->rodLength = 500;
+	//physWorld.links.push_back(rod);
+
+	for (int i = 0; i < 5; i++) {
+		Particle* particle = new Particle();
+		particle->position = Vector(i * 105, 400, 0);
+		particle->mass = 50;
+		particle->radius = 50;
+		physWorld.addParticle(particle);
 	
-	// Accepts player input for the number of sparks allowed on screen
-	int sparkNum = 0;
-		cout << "Enter spark number: ";
-		cin >> sparkNum;
-		cout << endl;
-	
-	/*
-	* Render particle factory which takes a pointer to VAR : [physWorld] to update particles
-	*	- Responsible for spawning in new sparks
-	*/ 
-	RenderParticleFactory renParFactory(&physWorld);
-		// List of all render particles
+		Cable* cable = new Cable(100, 0, particle->position);
+		cable->particles[0] = particle;
+		cable->particles[1] = nullptr;
+		physWorld.links.push_back(cable);
+	}
+
+	//////////////////////RENDER PARTICLE LIST//////////////////////
 	list<RenderParticle*> renderParticles;
+
+	for (int i = 0; i < allModels.size(); i++) {
+		Vector newCol;
+		vec3 col = (dynamic_cast<Object*>(allModels[i])->getColor());
+		newCol.x = col.x;
+		newCol.y = col.y;
+		newCol.z = col.z;
+
+		RenderParticle* renPar = new RenderParticle(physWorld.getParticleAtIndex(i), allModels[i], newCol);
+		renderParticles.push_back(renPar);
+	}
 
 	//////////////////////MAIN LOOP//////////////////////
 	while (!glfwWindowShouldClose(window))
 	{
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+		glClear(GL_COLOR_BUFFER_BIT);
 		//GETS CURRENT TIME
 		currTime = clock::now();
 		auto duration = chrono::duration_cast<chrono::nanoseconds> (currTime - prevTime);
 		prevTime = currTime;
 
 		checkInput();
-		inputCooldown++;
+
+		if (punched) {
+			physWorld.getParticleAtIndex(0)->addForce(Vector(-0.8, 0, 0) * 1200);
+			punched = false;
+		}
 
 		curr_ns += duration;
-		///// FIXED UPDATE /////
 		if (curr_ns >= timestep) {
 			auto ms = chrono::duration_cast<chrono::milliseconds>(curr_ns);
 			//RESET
 			curr_ns -= curr_ns;
 
-			orthoCam->update();
-			persCam->update();
-
-			// Will only update if the game is playing
-			if (play) {
-				physWorld.update((float)ms.count() / 1000);
-
-				// Will continuously spawn sparks as long as the max amount of sparks is not reached
-				if (renderParticles.size() < sparkNum) {
-					renderParticles.push_back(renParFactory.create());
-				}
-			}
+			physWorld.update((float)ms.count() / 1000);
 		}
 		
 		//All objects use the same shader anyway
-		glUseProgram(sphereObj->getShader().getShaderProg());
-		//Change view depending on which camera is active
-		if(camOn == ORTHOGRAPHIC) orthoCam->draw(sphereObj->getShader().getShaderProg());
-		else persCam->draw(sphereObj->getShader().getShaderProg());
-
+		glUseProgram(allModels[0]->getShader().getShaderProg());
+		orthoCam->draw(allModels[0]->getShader().getShaderProg());
 		setVAO(&sphereVAO, BIND);
+
 		for (list<RenderParticle*>::iterator r = renderParticles.begin(); r != renderParticles.end(); r++) {
 			(*r)->draw();
 		}
-
-		// Removes destroyed render particles
-		cleanRenderParticles(&renderParticles);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
 }
 
-	// Checks if a render particle has been destroyed, and removes it from the list if it is
-void Game::cleanRenderParticles(list<RenderParticle*>* renderParticles)
-{
-	renderParticles->remove_if(
-		[](RenderParticle* p) {
-			return p->isDestroyed;
-		}
-	);
-}
-
 void Game::checkInput()
 {
 	// Camera Switching
-	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) camOn = ORTHOGRAPHIC;
-	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) camOn = PERSPECTIVE;
-	// Pause / Play
-	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS && inputCooldown >= 1000) {
-		play = !play;
-		inputCooldown = 0;
-	}
-	// Camera Rotation
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) { persCam->rotateWithKeys('W'); orthoCam->rotateWithKeys('W'); }
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) { persCam->rotateWithKeys('S'); orthoCam->rotateWithKeys('S'); }
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) { persCam->rotateWithKeys('A'); orthoCam->rotateWithKeys('A'); }
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) { persCam->rotateWithKeys('D'); orthoCam->rotateWithKeys('D'); }
+	//if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) camOn = ORTHOGRAPHIC;
+	//if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) camOn = PERSPECTIVE;
+	//// Pause / Play
+	//if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS && inputCooldown >= 1000) {
+	//	play = !play;
+	//	inputCooldown = 0;
+	//}
+	//// Camera Rotation
+	//if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) { persCam->rotateWithKeys('W'); orthoCam->rotateWithKeys('W'); }
+	//if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) { persCam->rotateWithKeys('S'); orthoCam->rotateWithKeys('S'); }
+	//if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) { persCam->rotateWithKeys('A'); orthoCam->rotateWithKeys('A'); }
+	//if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) { persCam->rotateWithKeys('D'); orthoCam->rotateWithKeys('D'); }
+	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) { punched = true; }
 }
 
   //For proper VAO handling
@@ -194,5 +193,8 @@ void Game::setVAO(GLuint* VAO, int type) {
 
 //DECONSTRUCTOR
 Game::~Game() {
+	for (Model3D* model : allModels)
+		model->~Model3D();
+
 	glDeleteVertexArrays(1, &sphereVAO);
 }

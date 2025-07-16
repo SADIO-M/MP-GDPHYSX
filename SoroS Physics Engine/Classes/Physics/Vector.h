@@ -16,17 +16,18 @@ namespace Physics {
 
 		//FUNCTIONS
 			/* Magnitude and Direction */
-		float magnitude();								
-		Vector direction();								
+		float magnitude();		
+		float sqrMagnitude();
+		Vector direction();
+		void normalize();
 			/* Basic Operations */
-			// RHS stands for right-hand side
-		Vector operator+ (const Vector RHS);	// Vector Addition
-		Vector operator- (const Vector RHS);	// Vector Subtraction
-		Vector operator* (const float scalar);	// Scalar Multiplication
-		void operator+= (const Vector RHS);	    // Vector Addition (just with +=)
-		void operator-= (const Vector RHS);		// Vector Subtraction (just with -=)
-		void operator*= (const float scalar);   // Scalar Multiplication (just with *=)
-			/* Vector Products */
+		Vector operator+ (const Vector RHS);	//Addition
+		Vector operator- (const Vector RHS);	//Subtraction
+		Vector operator* (const float scalar);	//Scalar Multiplication
+		void operator+= (const Vector RHS);
+		void operator-= (const Vector RHS);
+		void operator*= (const float scalar);
+		/* Vector Products */
 		Vector component(const Vector RHS); //Component Product
 		float dot(const Vector RHS);		//Dot Product
 		Vector cross(const Vector RHS);		//Cross Product

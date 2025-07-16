@@ -46,13 +46,18 @@
 #include "Classes/Physics/ForceRegistry.h"
 #include "Classes/Physics/GravityForceGenerator.h"
 #include "Classes/Physics/DragForceGenerator.h"
-#include "Classes/Physics/RenderParticleFactory.h"
+#include "Classes/Physics/ParticleContact.h"
+#include "Classes/Physics/ContactResolver.h"
+#include "Classes/Physics/Springs/AnchoredSpring.h"
+#include "Classes/Physics/Springs/ParticleSpring.h"
+#include "Classes/Physics/Links/ParticleLink.h"
+#include "Classes/Physics/Links/Rod.h"
+#include "Classes/Physics/Links/Cable.h"
 /* MODEL-RELATED CLASSES */
 #include "Classes/Models/Model3D.h"
 #include "Classes/Models/Object.h"
 /* CAMERA-RELATED CLASSES */
 #include "Classes/Cameras/Camera.h"
-#include "Classes/Cameras/Perspective.h"
 #include "Classes/Cameras/Orthographic.h"
 
 ////////// CONFIGURATIONS //////////
