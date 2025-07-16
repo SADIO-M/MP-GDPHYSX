@@ -157,7 +157,7 @@ void Game::run() {
 			physWorld.update((float)ms.count() / 1000);
 
 			if (play) {
-				physWorld.getParticleAtIndex(0)->addForce(force * 1200);
+				physWorld.getParticleAtIndex(0)->addForce(force);
 				play = false;
 			}
 		}

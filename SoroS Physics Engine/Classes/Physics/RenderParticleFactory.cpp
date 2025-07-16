@@ -71,7 +71,7 @@ namespace Physics{
 
 		// MAKING THE PARTICLE //
 		Particle* particle = new Particle();
-
+		particle->radius = scale;
 		particle->position = position;
 		particle->velocity = velocity;
 		particle->lifespan = lifespan;
