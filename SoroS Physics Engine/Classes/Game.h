@@ -54,7 +54,7 @@ private:
     //For play or pausing
     bool play = false;
     //Input cooldown
-    float inputCooldown = 0;
+    bool inputLock = false;
 
 public:
     //CONSTRUCTORS

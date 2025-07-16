@@ -143,7 +143,6 @@ void Game::run() {
 		prevTime = currTime;
 
 		checkInput();
-		inputCooldown++;
 
 		curr_ns += duration;
 		///// FIXED UPDATE /////
@@ -198,9 +197,9 @@ void Game::checkInput()
 	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) camOn = ORTHOGRAPHIC;
 	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) camOn = PERSPECTIVE;
 	// Pause / Play
-	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS && inputCooldown >= 1000) {
+	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS && !inputLock) {
 		play = true;
-		inputCooldown = 0;
+		inputLock = true;
 	}
 	// Camera Rotation
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) { persCam->rotateWithKeys('W'); orthoCam->rotateWithKeys('W'); }

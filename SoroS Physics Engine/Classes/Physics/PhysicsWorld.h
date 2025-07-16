@@ -34,7 +34,7 @@ namespace Physics {
 		void changeGravity(float newGravity);
 
 	private:
-		GravityForceGenerator gravity = GravityForceGenerator(Vector(0, -50.0f, 0));
+		GravityForceGenerator gravity = GravityForceGenerator(Vector(0, -9.8f, 0));
 		void updateParticleList();
 
 	protected:
