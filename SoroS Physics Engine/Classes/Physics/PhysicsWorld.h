@@ -31,6 +31,8 @@ namespace Physics {
 		list<Particle*>* getParticleList();
 		Particle* getParticleAtIndex(int index);
 
+		void changeGravity(float newGravity);
+
 	private:
 		GravityForceGenerator gravity = GravityForceGenerator(Vector(0, -50.0f, 0));
 		void updateParticleList();

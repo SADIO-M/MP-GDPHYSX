@@ -7,12 +7,12 @@ namespace Physics{
 		//VARIABLES
 		public:
 			float lifespan = 5.0f; 
-			float mass = 1;			//Mass
+			float mass = 50;			//Mass
 			Vector position;		//Current Pos
 			Vector velocity;		//Current Velocity
 			Vector acceleration;	//Current Acceleration
 			float radius = 50.f;	//Size of particle
-			float restitution = 1.f;//Bouncy and non-bouncy
+			float restitution = 0.9f;//Bouncy and non-bouncy
 
 		protected:
 			//Default drag value

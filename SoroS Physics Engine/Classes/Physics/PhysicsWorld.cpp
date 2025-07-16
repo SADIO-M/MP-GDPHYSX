@@ -98,4 +98,10 @@ namespace Physics {
 		advance(particle, index);
 		return *particle;
 	}
+	void PhysicsWorld::changeGravity(float newGravity)
+	{
+		if (newGravity > 0) newGravity *= -1;
+
+		gravity = GravityForceGenerator(Vector(0, newGravity, 0));
+	}
 }

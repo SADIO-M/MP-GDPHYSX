@@ -93,11 +93,11 @@ void Game::run() {
 		cin >> particleGap;
 		cout << endl;
 	float particleRadius = 0.f;
-		cout << "Particle Radus: ";
+		cout << "Particle Radius: ";
 		cin >> particleRadius;
 		cout << endl;
 	float gravityStrength = 0.f;
-		cout << "Particle Radus: ";
+		cout << "Gravity Strength: ";
 		cin >> gravityStrength;
 		cout << endl;
 	Vector force;
@@ -108,6 +108,7 @@ void Game::run() {
 		cout << "Z: ";	
 		cin >> force.z;
 	
+	physWorld.changeGravity(gravityStrength);
 	RenderParticleFactory renParFactory(&physWorld);
 	list<RenderParticle*> renderParticles;
 
@@ -118,10 +119,17 @@ void Game::run() {
 		firstPosValue += (particleGap + (particleRadius * 2));
 		Vector orbPosition(firstPosValue, 0.f, 0.f);
 
-		renderParticles.push_back(renParFactory.create(
+		RenderParticle* newParticle = renParFactory.create(
 			orbPosition, particleRadius, orbColor,
 			Vector(0.f, 0.f, 0.f), 0.f
-			));
+			);
+
+		renderParticles.push_back(newParticle);
+		
+		Cable* cable = new Cable(cableLength, 0, orbPosition);
+		cable->particles[0] = newParticle->physicsParticle;
+		cable->particles[1] = nullptr;
+		physWorld.links.push_back(cable);
 	}
 
 	//////////////////////MAIN LOOP//////////////////////
@@ -147,9 +155,11 @@ void Game::run() {
 			orthoCam->update();
 			persCam->update();
 
-			// Will only update if the game is playing
+			physWorld.update((float)ms.count() / 1000);
+
 			if (play) {
-				physWorld.update((float)ms.count() / 1000);
+				physWorld.getParticleAtIndex(0)->addForce(force * 1200);
+				play = false;
 			}
 		}
 		
@@ -189,7 +199,7 @@ void Game::checkInput()
 	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) camOn = PERSPECTIVE;
 	// Pause / Play
 	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS && inputCooldown >= 1000) {
-		play = !play;
+		play = true;
 		inputCooldown = 0;
 	}
 	// Camera Rotation
