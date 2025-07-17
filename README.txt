@@ -1,6 +1,6 @@
 |------------------------------------------------|
 
-      GDPHYSX S22 - PHASE 1 OF MP SUBMISSION
+      GDPHYSX S22 - PHASE 2 OF MP SUBMISSION
 
               "SoroS Physics Engine"    
 
