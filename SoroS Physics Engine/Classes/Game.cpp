@@ -114,9 +114,9 @@ void Game::run() {
 
 	// Assembles the Newton's cradle
 	Vector orbColor(1.f, 0.5f, 0.4f);
-	float firstPosValue = -((particleGap * 3) + (particleRadius * 6));
+	float firstPosValue = -((particleGap * 3));
 	for (int i = 0; i < 5; i++) {
-		firstPosValue += (particleGap + (particleRadius * 2));
+		firstPosValue += particleGap;
 		Vector orbPosition(firstPosValue, 600.f, 0.f);
 
 		RenderParticle* newParticle = renParFactory.create(
