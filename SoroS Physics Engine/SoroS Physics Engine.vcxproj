@@ -142,6 +142,7 @@
     <ClCompile Include="Classes\Cameras\Camera.cpp" />
     <ClCompile Include="Classes\Cameras\Orthographic.cpp" />
     <ClCompile Include="Classes\Cameras\Perspective.cpp" />
+    <ClCompile Include="Classes\Models\Line.cpp" />
     <ClCompile Include="Classes\Physics\ContactResolver.cpp" />
     <ClCompile Include="Classes\Physics\DragForceGenerator.cpp" />
     <ClCompile Include="Classes\Physics\ForceGenerator.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="Classes\Cameras\Camera.h" />
     <ClInclude Include="Classes\Cameras\Orthographic.h" />
     <ClInclude Include="Classes\Cameras\Perspective.h" />
+    <ClInclude Include="Classes\Models\Line.h" />
     <ClInclude Include="Classes\Physics\ContactResolver.h" />
     <ClInclude Include="Classes\Physics\DragForceGenerator.h" />
     <ClInclude Include="Classes\Physics\ForceGenerator.h" />

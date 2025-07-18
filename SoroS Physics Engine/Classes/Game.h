@@ -5,6 +5,7 @@
 #include "../Config/enumerations.h"
 /// MODELS
 #include "Models/Object.h"
+#include "Models/Line.h"
 /// CAMERAS
 #include "Cameras/Orthographic.h"
 #include "Cameras/Perspective.h"
@@ -43,8 +44,9 @@ private:
 
     // Sphere Object and VAO
     Model3D* sphereObj;
+    //Model3D* lineObj;
     GLuint sphereVAO;
-    
+
     // Orthographic camera
     Orthographic* orthoCam;
     Perspective* persCam;

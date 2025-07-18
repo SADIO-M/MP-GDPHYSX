@@ -79,10 +79,10 @@ void Game::run() {
 	auto currTime = clock::now();
 	auto prevTime = currTime;
 	chrono::nanoseconds curr_ns(0);
-	
+
 	// Initialize a physics world
 	PhysicsWorld physWorld = PhysicsWorld();
-	
+
 	// Accepts player input for the number of sparks allowed on screen
 	float cableLength = 0.f;
 		cout << "Cable Length: ";
@@ -101,13 +101,13 @@ void Game::run() {
 		cin >> gravityStrength;
 		cout << endl;
 	Vector force;
-		cout << "Apply Force\nX: ";	
+		cout << "Apply Force\nX: ";
 		cin >> force.x;
-		cout << "Y: ";	
+		cout << "Y: ";
 		cin >> force.y;
-		cout << "Z: ";	
+		cout << "Z: ";
 		cin >> force.z;
-	
+
 	physWorld.changeGravity(gravityStrength);
 	RenderParticleFactory renParFactory(&physWorld);
 	list<RenderParticle*> renderParticles;
@@ -117,18 +117,19 @@ void Game::run() {
 	float firstPosValue = -((particleGap * 3) + (particleRadius * 6));
 	for (int i = 0; i < 5; i++) {
 		firstPosValue += (particleGap + (particleRadius * 2));
-		Vector orbPosition(firstPosValue, 0.f, 0.f);
+		Vector orbPosition(firstPosValue, 600.f, 0.f);
 
 		RenderParticle* newParticle = renParFactory.create(
 			orbPosition, particleRadius, orbColor,
 			Vector(0.f, 0.f, 0.f), 0.f
-			);
+		);
 
 		renderParticles.push_back(newParticle);
-		
+
 		Cable* cable = new Cable(cableLength, orbPosition);
 		cable->particles[0] = newParticle->physicsParticle;
 		cable->particles[1] = nullptr;
+		cable->createLineLink();
 		physWorld.links.push_back(cable);
 	}
 
@@ -156,16 +157,27 @@ void Game::run() {
 
 			physWorld.update((float)ms.count() / 1000);
 
+			for (int l = 0; l < physWorld.getLinkList()->size(); l++) {
+				physWorld.getLinkAtIndex(l)->fixLineLink();
+			}
+
 			if (play) {
 				physWorld.getParticleAtIndex(0)->addForce(force);
 				play = false;
 			}
 		}
-		
+
+		for (int l = 0; l < physWorld.getLinkList()->size(); l++) {
+			glUseProgram(physWorld.getLinkAtIndex(0)->lineLink->getShader().getShaderProg());
+			if (camOn == ORTHOGRAPHIC) orthoCam->draw(physWorld.getLinkAtIndex(0)->lineLink->getShader().getShaderProg());
+			else persCam->draw(physWorld.getLinkAtIndex(0)->lineLink->getShader().getShaderProg());
+			physWorld.getLinkAtIndex(l)->lineLink->draw();
+		}
+
 		//All objects use the same shader anyway
 		glUseProgram(sphereObj->getShader().getShaderProg());
 		//Change view depending on which camera is active
-		if(camOn == ORTHOGRAPHIC) orthoCam->draw(sphereObj->getShader().getShaderProg());
+		if (camOn == ORTHOGRAPHIC) orthoCam->draw(sphereObj->getShader().getShaderProg());
 		else persCam->draw(sphereObj->getShader().getShaderProg());
 
 		setVAO(&sphereVAO, BIND);

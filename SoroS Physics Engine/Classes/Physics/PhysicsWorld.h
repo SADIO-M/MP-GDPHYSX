@@ -22,14 +22,19 @@ namespace Physics {
 
 		list<Particle*> Particles;
 
+		// ADD PARTICLES
 		void addParticle(Particle* toAdd);
-		//NEW
 		void addStaticParticle(Particle* toAdd);
 
+		// UPDATE FUNCTION
 		void update(float time);
 
+		//SETTERS AND GETTERS
 		list<Particle*>* getParticleList();
 		Particle* getParticleAtIndex(int index);
+
+		vector<ParticleLink*>* getLinkList();
+		ParticleLink* getLinkAtIndex(int index);
 
 		void changeGravity(float newGravity);
 

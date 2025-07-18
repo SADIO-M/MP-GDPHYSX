@@ -50,6 +50,7 @@
 /* MODEL-RELATED CLASSES */
 #include "Classes/Models/Model3D.h"
 #include "Classes/Models/Object.h"
+#include "Classes/Models/Line.h"
 /* CAMERA-RELATED CLASSES */
 #include "Classes/Cameras/Camera.h"
 #include "Classes/Cameras/Perspective.h"
@@ -77,7 +78,7 @@ int main(void)
 
     //Set window position so window spawns at the same place every time
     //Placed on the right so user can see the prompt to type number of sparks
-    glfwSetWindowPos(window, 1080, 540 - (windowHeight / 2));
+    glfwSetWindowPos(window, 1080 - (windowWidth / 2), 540 - (windowHeight / 2));
 
     //Create, start, then deconstruct game when finished
     Game game(window, windowWidth, windowHeight);

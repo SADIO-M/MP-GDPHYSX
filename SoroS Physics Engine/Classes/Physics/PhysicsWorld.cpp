@@ -98,6 +98,17 @@ namespace Physics {
 		advance(particle, index);
 		return *particle;
 	}
+
+	vector<ParticleLink*>* PhysicsWorld::getLinkList()
+	{
+		return &links;
+	}
+
+	ParticleLink* PhysicsWorld::getLinkAtIndex(int index)
+	{
+		return links[index];
+	}
+
 	void PhysicsWorld::changeGravity(float newGravity)
 	{
 		if (newGravity > 0) newGravity *= -1;
