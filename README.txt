@@ -1,8 +1,9 @@
 |------------------------------------------------|
 
-      GDPHYSX S22 - PHASE 1 OF MP SUBMISSION
+      SoroS Physics Engine
 
-              "SoroS Physics Engine"    
+ Phase 1 (Particle System) and 2 (Mass Aggregate) 
+	implemented in respective branches
 
   Programmed by:
       1. Yzabelle Anne A. Montuerto 
