@@ -5,6 +5,12 @@ using namespace Physics;
 namespace Physics {
 	Cable::Cable() {}
 
+	Cable::Cable(float cableLength, Vector anchor)
+	{
+		this->cableLength = cableLength;
+		this->anchor = anchor;
+	}
+
 	Cable::Cable(float cableLength, float restitution, Vector anchor)
 	{
 		this->cableLength = cableLength;
@@ -21,7 +27,6 @@ namespace Physics {
 
 		ParticleContact* particleContact = new ParticleContact();
 		particleContact->particles[0] = particles[0];
-		//particleContact->particles[1] = particles[1];
 
 		Vector direction = anchor - particles[0]->position;
 		direction.normalize();

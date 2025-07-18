@@ -126,7 +126,7 @@ void Game::run() {
 
 		renderParticles.push_back(newParticle);
 		
-		Cable* cable = new Cable(cableLength, 0, orbPosition);
+		Cable* cable = new Cable(cableLength, orbPosition);
 		cable->particles[0] = newParticle->physicsParticle;
 		cable->particles[1] = nullptr;
 		physWorld.links.push_back(cable);
