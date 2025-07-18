@@ -3,6 +3,10 @@
 #include "Particle.h"
 #include "../../Config/namespace.h"
 
+/*
+*	ParticleContact class
+*		- Takes care of contacts between particles (resolves their velocity and interpenetration)
+*/
 namespace Physics {
 	class ParticleContact {
 	public:
@@ -13,7 +17,7 @@ namespace Physics {
 		float depth;
 		float separatingSpeed;
 		
-		//FUNCTION
+		//FUNCTIONS
 		void resolve(float time);
 		float getSeparatingSpeed();
 

@@ -28,7 +28,7 @@
 
 /* 
     Game Class
-        - Contains the sphere and cameras
+        - Contains the particles and links (via physics world) and cameras
         - Where the main game loop is located
         - Fixed Update handles all physics-related things (like physics world and render particles)
         - Handles player inputs
@@ -44,7 +44,6 @@ private:
 
     // Sphere Object and VAO
     Model3D* sphereObj;
-    //Model3D* lineObj;
     GLuint sphereVAO;
 
     // Orthographic camera
@@ -53,9 +52,9 @@ private:
 
     //Checks current camera 
     CAM_TYPE camOn = ORTHOGRAPHIC;
-    //For play or pausing
+    //For playing (adding force to leftmost particle)
     bool play = false;
-    //Input cooldown
+    //Input lock (so force is only added once)
     bool inputLock = false;
 
 public:

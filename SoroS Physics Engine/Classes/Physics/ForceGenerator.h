@@ -3,6 +3,11 @@
 #include "Particle.h"
 #include "../../Config/namespace.h"
 
+/*
+	ForceGenerator class
+		- Parent class to force generators
+		- Can be used to simulate forces like gravity, drag, etc.
+*/
 namespace Physics {
 	class ForceGenerator {
 	public:

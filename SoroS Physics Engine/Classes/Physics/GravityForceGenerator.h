@@ -2,6 +2,11 @@
 
 #include "ForceGenerator.h"
 
+/*
+	GravityForceGenerator class
+		- Force generator for gravity
+		- Simulates gravity applied on a particle by adding the downward force to it
+*/
 namespace Physics {
 	class GravityForceGenerator : public ForceGenerator {
 	private:

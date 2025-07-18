@@ -3,6 +3,7 @@
 using namespace Physics;
 
 namespace Physics {
+	//Add a contact
 	void PhysicsWorld::addContact(Particle* p1, Particle* p2, float restitution, Vector contactNormal, float depth)
 	{
 		ParticleContact* toAdd = new ParticleContact();
@@ -16,34 +17,40 @@ namespace Physics {
 		contacts.push_back(toAdd);
 	}
 
+	//Add a particle affected by gravity
 	void PhysicsWorld::addParticle(Particle* toAdd) {
 		Particles.push_back(toAdd);
 		forceRegistry.add(toAdd, &gravity);
 	}
 
+	//Add a particle not affected by gravity
 	void PhysicsWorld::addStaticParticle(Particle* toAdd)
 	{
 		Particles.push_back(toAdd);
 	}
 
+	//Get the particle list
 	list<Particle*>* PhysicsWorld::getParticleList() {
 		return &Particles;
 	}
 
+	//Update everything
 	void PhysicsWorld::update(float time) {
+		//Update the particle list
 		updateParticleList();
-
+		//Update forces
 		forceRegistry.updateForces(time);
-
+		//Update individual particles
 		for (list<Particle*>::iterator p = Particles.begin(); p != Particles.end(); p++) {
 			(*p)->update(time);
 		}
-
+		//Generate contacts (check if any contacts occurred)
 		generateContacts();
-		
+		//If contacts occurred, resolve
 		if (contacts.size() > 0) contactResolver.resolveAllContacts(contacts, time);
 	}
-
+	
+	//Remove particle from list if destroyed
 	void PhysicsWorld::updateParticleList() {
 		Particles.remove_if(
 			[](Particle* p) {
@@ -52,6 +59,7 @@ namespace Physics {
 		);
 	}
 
+	//Get overlaps, if any
 	void PhysicsWorld::getOverlaps()
 	{
 		for (int i = 0; i < Particles.size() - 1; i++) {
@@ -82,6 +90,7 @@ namespace Physics {
 		}
 	}
 
+	//Clear contacts, check if there are any overlapping particles, then push back if contact is present
 	void PhysicsWorld::generateContacts()
 	{
 		contacts.clear();
@@ -93,22 +102,26 @@ namespace Physics {
 		}
 	}
 
+	//Get a particle at a specific index
 	Particle* PhysicsWorld::getParticleAtIndex(int index) {
 		list<Particle*>::iterator particle = Particles.begin();
 		advance(particle, index);
 		return *particle;
 	}
 
+	//Return the links list 
 	vector<ParticleLink*>* PhysicsWorld::getLinkList()
 	{
 		return &links;
 	}
 
+	//Get a link at a specific index
 	ParticleLink* PhysicsWorld::getLinkAtIndex(int index)
 	{
 		return links[index];
 	}
 
+	//Change gravity
 	void PhysicsWorld::changeGravity(float newGravity)
 	{
 		if (newGravity > 0) newGravity *= -1;

@@ -10,6 +10,13 @@
 
 #include "../../Config/namespace.h"
 
+/*
+*	PhysicsWorld Class
+*		- Takes care of everything physics related (contacts, particles, links, etc).
+*		- Updates particles information
+*		- Creates contacts (if ever) and checks overlapping, and resolves accordingly
+*		- Also takes care of force registry (what forces apply to what particle)
+*/
 namespace Physics {
 	class PhysicsWorld {
 	public:

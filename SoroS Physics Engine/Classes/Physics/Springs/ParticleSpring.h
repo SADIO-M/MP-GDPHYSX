@@ -2,6 +2,14 @@
 
 #include "../ForceGenerator.h"
 
+/*
+	ParticleSpring class
+		- Child of ForceGenerator
+		- Allows a "spring" link (simulate a spring)
+		- Spring constant for bounciness
+		- Rest length for default length of the spring
+		- Linking a spring between two particles
+*/
 namespace Physics {
 	class ParticleSpring : public ForceGenerator {
 	private:

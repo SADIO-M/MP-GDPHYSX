@@ -3,6 +3,7 @@
 using namespace Physics;
 
 namespace Physics{
+	//Add particle and force generator
 	void Physics::ForceRegistry::add(Particle* particle, ForceGenerator* generator) {
 		ParticleForceRegistry toAdd;
 		toAdd.particle = particle;
@@ -11,6 +12,7 @@ namespace Physics{
 		Registry.push_back(toAdd);
 	}
 
+	//Remove a specific particle and force generator in the registry 
 	void Physics::ForceRegistry::remove(Particle* particle, ForceGenerator* generator) {
 		Registry.remove_if(
 			[particle, generator](ParticleForceRegistry reg) {
@@ -20,10 +22,12 @@ namespace Physics{
 		);
 	}
 
+	//Clear the registry
 	void Physics::ForceRegistry::clear() {
 		Registry.clear();
 	}
 
+	//Update the force generator
 	void Physics::ForceRegistry::updateForces(float time) {
 		for (list<ParticleForceRegistry>::iterator i = Registry.begin();
 			i != Registry.end();

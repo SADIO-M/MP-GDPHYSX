@@ -3,6 +3,7 @@
 using namespace Physics;
 
 namespace Physics {
+	//Create spring
 	ParticleSpring::ParticleSpring(Particle* particle, float springConst, float restLen)
 	{
 		otherParticle = particle;
@@ -10,6 +11,7 @@ namespace Physics {
 		restLength = restLen;
 	}
 
+	//Makes updates spring force to simulate bounce
 	void ParticleSpring::updateForce(Particle* particle, float time)
 	{
 		Vector pos = particle->position;

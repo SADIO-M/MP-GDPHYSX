@@ -3,6 +3,7 @@
 using namespace Physics;
 
 namespace Physics{
+	//Generate anchored spring
 	Physics::AnchoredSpring::AnchoredSpring(Vector position, float springConst, float restLen)
 	{
 		anchorPoint = position;
@@ -10,6 +11,7 @@ namespace Physics{
 		restLength = restLen;
 	}
 
+	//Update force, difference is that the force is based on an anchor point, not on another particle's position
 	void AnchoredSpring::updateForce(Particle* particle, float time)
 	{
 		Vector pos = particle->position;

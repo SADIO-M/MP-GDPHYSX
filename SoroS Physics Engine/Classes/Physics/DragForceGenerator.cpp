@@ -5,10 +5,12 @@ using namespace Physics;
 namespace Physics {
 	DragForceGenerator::DragForceGenerator() {}
 	DragForceGenerator::DragForceGenerator(float newK1, float newK2){
+		//Update coefficients
 		k1 = newK1;
 		k2 = newK2;
 	}
 
+	//Update force, drag formula
 	void DragForceGenerator::updateForce(Particle* particle, float time){
 		Vector force = Vector(0, 0, 0);
 		Vector currVel = particle->velocity;

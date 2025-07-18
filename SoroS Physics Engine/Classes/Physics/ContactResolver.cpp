@@ -3,8 +3,8 @@
 using namespace Physics;
 
 namespace Physics {
-		ContactResolver::ContactResolver(unsigned maxIter)
-	{
+	//Set max number of iterations
+	ContactResolver::ContactResolver(unsigned maxIter) {
 		maxIterations = maxIter;
 	}
 

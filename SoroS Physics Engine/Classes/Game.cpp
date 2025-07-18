@@ -164,6 +164,7 @@ void Game::run() {
 
 			physWorld.update((float)ms.count() / 1000);
 
+			//Fixes the render of the links, so it follows the particle properly
 			for (int l = 0; l < physWorld.getLinkList()->size(); l++) {
 				physWorld.getLinkAtIndex(l)->fixLineLink();
 			}
@@ -174,10 +175,14 @@ void Game::run() {
 			}
 		}
 
+		//Draws the lines for the links
 		for (int l = 0; l < physWorld.getLinkList()->size(); l++) {
+			//All lines use the same shader
 			glUseProgram(physWorld.getLinkAtIndex(0)->lineLink->getShader().getShaderProg());
+			//Change camera view
 			if (camOn == ORTHOGRAPHIC) orthoCam->draw(physWorld.getLinkAtIndex(0)->lineLink->getShader().getShaderProg());
 			else persCam->draw(physWorld.getLinkAtIndex(0)->lineLink->getShader().getShaderProg());
+			//Draw the corresponding line
 			physWorld.getLinkAtIndex(l)->lineLink->draw();
 		}
 
@@ -186,7 +191,8 @@ void Game::run() {
 		//Change view depending on which camera is active
 		if (camOn == ORTHOGRAPHIC) orthoCam->draw(sphereObj->getShader().getShaderProg());
 		else persCam->draw(sphereObj->getShader().getShaderProg());
-
+		
+		//Draws the particles
 		setVAO(&sphereVAO, BIND);
 		for (list<RenderParticle*>::iterator r = renderParticles.begin(); r != renderParticles.end(); r++) {
 			(*r)->draw();

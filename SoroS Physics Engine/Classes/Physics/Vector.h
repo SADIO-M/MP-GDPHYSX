@@ -16,17 +16,17 @@ namespace Physics {
 
 		//FUNCTIONS
 			/* Magnitude and Direction */
-		float magnitude();		
-		float sqrMagnitude();
-		Vector direction();
+		float magnitude();		// Magnitude
+		float sqrMagnitude();	// Square magnitude (if using sqrt gets costly)
+		Vector direction();		// Returns the direction of the 
 		void normalize();
 			/* Basic Operations */
 		Vector operator+ (const Vector RHS);	//Addition
 		Vector operator- (const Vector RHS);	//Subtraction
 		Vector operator* (const float scalar);	//Scalar Multiplication
-		void operator+= (const Vector RHS);
-		void operator-= (const Vector RHS);
-		void operator*= (const float scalar);
+		void operator+= (const Vector RHS);		//Addition
+		void operator-= (const Vector RHS);		//Subtraction
+		void operator*= (const float scalar);	//Scalar Multiplication
 		/* Vector Products */
 		Vector component(const Vector RHS); //Component Product
 		float dot(const Vector RHS);		//Dot Product

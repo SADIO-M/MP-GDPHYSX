@@ -14,6 +14,8 @@ namespace Physics{
 	*	Creates the sphere model, physics particle, and the render particle to hold both.
 	*		- Also adds the physics particle to the particle list in Game
 	*		- Handles the randomized properties of the particle
+	* 
+	*	Used specifically for randomizing colors, sizes, and lifespan (like firework sparks)
 	*/
 	RenderParticle* Physics::RenderParticleFactory::create()
 	{
@@ -53,6 +55,12 @@ namespace Physics{
 		return renPar;
 	}
 
+	/*
+	*	Creates the sphere model, physics particle, and the render particle to hold both.
+	*		- Also adds the physics particle to the particle list in Game
+	* 
+	*	Used specifically for creating uniform particles (like the newton's cradle's balls)
+	*/
 	RenderParticle* RenderParticleFactory::create(Vector position, float scale, Vector color, Vector velocity, float lifespan)
 	{
 		// MAKING THE SPHERE OBJECT // 

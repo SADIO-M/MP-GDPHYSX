@@ -3,6 +3,10 @@
 #include "ForceGenerator.h"
 #include "../../Config/namespace.h"
 
+/*
+	DragForceGenerator class
+		- Simulates drag, has k1 and k2 that is modifiable to simulate different types of surfaces
+*/
 namespace Physics {
 	class DragForceGenerator : public ForceGenerator {
 	private:

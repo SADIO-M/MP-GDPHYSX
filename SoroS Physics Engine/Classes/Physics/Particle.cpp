@@ -3,6 +3,7 @@
 using namespace Physics;
 
 namespace Physics {
+
 	void Particle::updatePosition(float time) {
 		this->position =
 			this->position + (this->velocity * time) + ((this->acceleration * pow(time, 2)) * (1.0f / 2.0f));

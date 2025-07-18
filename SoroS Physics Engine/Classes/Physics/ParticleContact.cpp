@@ -3,11 +3,13 @@
 using namespace Physics;
 
 namespace Physics {
+	//Resolve velocity and interpenetration
 	void ParticleContact::resolve(float time) {
 		resolveVelocity(time);
 		resolveInterpenetration(time);
 	}
 
+	//Get the separating speed of the particles
 	float ParticleContact::getSeparatingSpeed() {
 		Vector velocity = particles[0]->velocity;
 		if (particles[1]) velocity -= particles[1]->velocity;
@@ -16,6 +18,7 @@ namespace Physics {
 		return separatingSpeed;
 	}
 
+	//Resolve the velocity of the particle (when they bump, how do they move)
 	void ParticleContact::resolveVelocity(float time) {
 		separatingSpeed = getSeparatingSpeed();
 
@@ -41,6 +44,7 @@ namespace Physics {
 		}
 	}
 
+	//Resolve interpenetration (when they overlap, how far should they go back)
 	void ParticleContact::resolveInterpenetration(float time)
 	{
 		if (depth <= 0) return;
