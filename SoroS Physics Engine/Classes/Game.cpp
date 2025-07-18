@@ -83,7 +83,7 @@ void Game::run() {
 	// Initialize a physics world
 	PhysicsWorld physWorld = PhysicsWorld();
 
-	// Accepts player input for the number of sparks allowed on screen
+	// Accepts player input for the required variables
 	float cableLength = 0.f;
 		cout << "Cable Length: ";
 		cin >> cableLength;
@@ -108,17 +108,23 @@ void Game::run() {
 		cout << "Z: ";
 		cin >> force.z;
 
+	// Changes the Physics World's gravity based on player input
 	physWorld.changeGravity(gravityStrength);
+	// Makes the render particle factory and list
 	RenderParticleFactory renParFactory(&physWorld);
 	list<RenderParticle*> renderParticles;
 
-	// Assembles the Newton's cradle
-	Vector orbColor(1.f, 0.5f, 0.4f);
-	float firstPosValue = -((particleGap * 3));
+	////////////////////// ASSEMBLES NEWTON'S CRADLE STRUCTURE //////////////////////
+	Vector orbColor(1.f, 0.5f, 0.4f);			// The color of the orbs (a light orange)
+	float firstPosValue = -((particleGap * 3));	// Sets the position of the first orb to be to the left so that the third orb is centered				
+	
+	// Creates 5 orbs using the render particle factory and the player's inputs
 	for (int i = 0; i < 5; i++) {
-		firstPosValue += particleGap;
+		// Increases position of next orb based on the required gap
+		firstPosValue += particleGap; 
 		Vector orbPosition(firstPosValue, 600.f, 0.f);
 
+		// Creates the orb
 		RenderParticle* newParticle = renParFactory.create(
 			orbPosition, particleRadius, orbColor,
 			Vector(0.f, 0.f, 0.f), 0.f
@@ -126,6 +132,7 @@ void Game::run() {
 
 		renderParticles.push_back(newParticle);
 
+		// Makes a cable connected to the orb
 		Cable* cable = new Cable(cableLength, orbPosition);
 		cable->particles[0] = newParticle->physicsParticle;
 		cable->particles[1] = nullptr;
