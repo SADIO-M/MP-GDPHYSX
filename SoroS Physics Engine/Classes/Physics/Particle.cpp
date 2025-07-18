@@ -40,11 +40,6 @@ namespace Physics {
 		return isDestroyed;
 	}
 
-	void Particle::setRadius(float newRadius)
-	{
-		radius = newRadius;
-	}
-
 	bool Particle::atCenter() {
 		float distance = sqrt(
 			pow((position.x - 0), 2) +

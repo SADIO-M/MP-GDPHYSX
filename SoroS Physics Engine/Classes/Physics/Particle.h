@@ -34,7 +34,6 @@ namespace Physics{
 			void Destroy();
 			bool IsDestroyed();
 
-			void setRadius(float newRadius);
 			//Checking
 			bool atCenter();
 	};

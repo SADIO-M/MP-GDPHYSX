@@ -16,11 +16,13 @@ namespace Physics{
 		physicsParticle = particle;
 		objectToRender = obj;
 		this->color = color;
+		obj->setScale(vec3(physicsParticle->radius));
 	}
 
 	// Draw the particle, specifically the model
 	void RenderParticle::draw() {
 		Object* obj = dynamic_cast<Object*>(objectToRender);
+		obj->setScale(vec3(physicsParticle->radius));
 
 		// If the particle is not destroyed, render it
 		if (!physicsParticle->IsDestroyed()) {

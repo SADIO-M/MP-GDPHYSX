@@ -26,7 +26,7 @@ void Game::initialize() {
 	// Setting everything to zero because all we need is to load the shaders
 	Vector zero(0, 0 ,0);
 	Vector orthoPos(0.0, 0.0, 5.0);
-	Vector persPos(0.0, 0.0, 700.0);
+	Vector persPos(0.0, 0.0, 1500.0);
 
 	setVAO(&sphereVAO, GENERATE);
 	setVAO(&sphereVAO, BIND);
@@ -61,11 +61,11 @@ void Game::initialize() {
 		windowWidth,            // Window width
 		windowHeight,			// Window height
 		0.1f,					// zNear
-		1200.0f,				// zFar
+		2500.0f,				// zFar
 		(vec3)persPos,	        // Camera Position
 		(vec3)zero,				// Camera Center
 		(vec3)zero,				// Camera Rotation
-		100.0					// Field of View (FOV)
+		60.0					// Field of View (FOV)
 	);
 
 	//Runs the game
